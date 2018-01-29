@@ -1,0 +1,5 @@
+parameters:
+   host: localhost
+   user: sql_user
+   password: sql_password
+   database: database
