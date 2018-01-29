@@ -1,3 +1,14 @@
+login:
+    path: /login
+    methods: [ 'POST' ]
+    controller: SixQuests\Action\LoginAction:login
+
+login_form:
+    path: /login
+    methods: [ 'GET' ]
+    controller: SixQuests\Action\LoginAction:form
+
 index:
     path: /
-    controller: SixQuests\Action\TestAction
+    controller: SixQuests\Action\RootController
+

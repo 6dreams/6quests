@@ -3,10 +3,10 @@ declare(strict_types = 1);
 
 namespace SixQuests\Domain\Manager;
 
-use SixQuests\Domain\Exeception\NoAuthException;
+use SixQuests\Domain\Exception\NoAuthException;
 use SixQuests\Domain\Model\User;
 use SixQuests\Domain\Repository\UserRepository;
-use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 /**
  * Class AuthManager
@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
 class AuthManager
 {
     /**
-     * @var Session
+     * @var SessionInterface
      */
     private $session;
 
@@ -27,24 +27,40 @@ class AuthManager
     /**
      * AuthManager constructor.
      *
-     * @param Session        $session
-     * @param UserRepository $users
+     * @param SessionInterface $session
+     * @param UserRepository   $users
      */
-    public function __construct(Session $session, UserRepository $users)
+    public function __construct(SessionInterface $session, UserRepository $users)
     {
         $this->session = $session;
         $this->users   = $users;
     }
 
-    public function getUser(): User
+    /**
+     * Получить залогиненного в системе пользователя.
+     *
+     * @return User
+     */
+    public function getUser(): ?User
     {
-        $userId = $this->session->get('user_id');
+        return $this->users->getUserById((int) $this->session->get('user_id'));
+    }
 
-        if (!$userId) {
+    /**
+     * Получить залогиненного в системе пользователя или бросить исключение.
+     *
+     * @return User
+     * @throws NoAuthException
+     */
+    public function getThrowableUser(): User
+    {
+        $user = $this->getUser();
+
+        if (!$user) {
             throw new NoAuthException();
         }
 
-        return new User();
+        return $user;
     }
 
     /**
@@ -54,10 +70,27 @@ class AuthManager
      */
     public function isAuth(): bool
     {
-        try {
-            return $this->getUser() !== null;
-        } catch (NoAuthException) {
-            return false;
+        return $this->getUser() !== null;
+    }
+
+    /**
+     * Авторизовать пользователя с указанными данными.
+     *
+     * @param string $login
+     * @param string $password
+     * @return User
+     * @throws NoAuthException
+     */
+    public function authUser(string $login, string $password): User
+    {
+        $user = $this->users->getUserByLoginPassword($login, $password);
+
+        if (!$user) {
+            throw new NoAuthException();
         }
+
+        $this->session->set('user_id', $user->getId());
+
+        return $user;
     }
 }

@@ -9,6 +9,7 @@ use SixDreams\RichModel\Traits\RichModelTrait;
  * Class User
  *
  * @method int getId();
+ * @method User setId(int $id);
  *
  * @method string getName();
  * @method User setName(string $name);
@@ -22,11 +23,17 @@ use SixDreams\RichModel\Traits\RichModelTrait;
  * @method string getLastName();
  * @method User setLastName(string $name);
  *
+ * @method int getRole();
+ * @method User setRole(int $role);
+ *
  * @package SixQuests\Domain\Model
  */
 class User
 {
     use RichModelTrait;
+
+    // пользователь является админом.
+    private const ROLE_ADMIN = 1;
 
     /**
      * @var int
@@ -52,4 +59,19 @@ class User
      * @var string
      */
     protected $lastName;
+
+    /**
+     * @var int
+     */
+    protected $role;
+
+    /**
+     * Пользователь админ?
+     *
+     * @return bool
+     */
+    public function isAdmin(): bool
+    {
+        return $this->role === self::ROLE_ADMIN;
+    }
 }

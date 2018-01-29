@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace SixQuests\Domain\Exeception;
+namespace SixQuests\Domain\Exception;
 
 /**
  * Class NoAuthException
