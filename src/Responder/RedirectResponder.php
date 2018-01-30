@@ -35,8 +35,14 @@ class RedirectResponder
      * @param User|null $user
      * @return Response
      */
-    public function __invoke(?User $user): Response
+    public function __invoke(?User $user = null): Response
     {
-        return new RedirectResponse($this->router->generate($user === null ? 'login_form' : 'index'));
+        if ($user === null) {
+            $route = 'login_form';
+        } else {
+            $route = $user->isAdmin() ? 'root_index' : 'coord_index';
+        }
+
+        return new RedirectResponse($this->router->generate($route));
     }
 }

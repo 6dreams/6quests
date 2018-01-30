@@ -59,6 +59,9 @@ class Driver
             $this->config->getUser(),
             $this->config->getPassword()
         );
+
+        $this->pdo->setAttribute(\PDO::ATTR_STRINGIFY_FETCHES, false);
+        $this->pdo->setAttribute(\PDO::ATTR_EMULATE_PREPARES, false);
     }
 
     /**
@@ -68,6 +71,25 @@ class Driver
     {
         $this->connect();
         $this->pdo->exec($query);
+    }
+
+    /**
+     * Преобразовать параметр запроса к базе в строку или число.
+     *
+     * @param mixed $value
+     * @return string|int
+     */
+    protected function processValue($value)
+    {
+        if (\is_int($value)) {
+            return $value;
+        }
+
+        if ($value instanceof \DateTime) {
+            return $value->format('Y-m-d H:i:s');
+        }
+
+        return $value;
     }
 
     /**
@@ -86,14 +108,15 @@ class Driver
         $statement = $this->pdo->prepare($query);
 
         foreach ($args as $key => $value) {
+            $value = $this->processValue($value);
             $statement->bindValue($key, $value, \is_int($value) ? \PDO::PARAM_INT : \PDO::PARAM_STR);
         }
 
         $statement->execute();
 
         $results = [];
-        foreach ($statement->fetchAll() as $result) {
-            $results = $this->hydrator->hydrate($model, $result);
+        foreach ($statement->fetchAll(\PDO::FETCH_ASSOC) as $result) {
+            $results[] = $this->hydrator->hydrate($model, $result);
         }
 
         return $results;

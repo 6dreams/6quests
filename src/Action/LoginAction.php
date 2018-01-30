@@ -5,6 +5,7 @@ namespace SixQuests\Action;
 
 use SixQuests\Domain\Exception\NoAuthException;
 use SixQuests\Domain\Manager\AuthManager;
+use SixQuests\Responder\LoginResponder;
 use SixQuests\Responder\RedirectResponder;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,28 +27,35 @@ class LoginAction
     private $redirector;
 
     /**
+     * @var LoginResponder
+     */
+    private $responder;
+
+    /**
      * LoginAction constructor.
      *
      * @param AuthManager       $authManager
      * @param RedirectResponder $redirectResponder
      */
-    public function __construct(AuthManager $authManager, RedirectResponder $redirectResponder)
+    public function __construct(AuthManager $authManager, RedirectResponder $redirectResponder, LoginResponder $responder)
     {
         $this->authManager = $authManager;
         $this->redirector  = $redirectResponder;
+        $this->responder   = $responder;
     }
 
     /**
-     * @param Request $request
+     * Отобразить форму авторизации.
+     *
      * @return Response
      */
-    public function form(Request $request): Response
+    public function form(): Response
     {
         if ($this->authManager->isAuth()) {
             return ($this->redirector)($this->authManager->getUser());
         }
 
-        return new Response($request->getUri());
+        return ($this->responder)();
     }
 
     /**
@@ -64,7 +72,7 @@ class LoginAction
                 (string) $request->get('password')
             );
         } catch (NoAuthException $e) {
-            $user = null;
+            return ($this->responder)(true);
         }
 
         return ($this->redirector)($user);

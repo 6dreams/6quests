@@ -1,0 +1,16 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+    {{ parent() }} — Вход
+{% endblock %}
+
+{% block body %}
+    {%  if error is defined %}
+        wrong login or pass
+    {% endif %}
+    <form action="{{ path('login') }}" method="post">
+        <input type="text" name="login" />
+        <input type="password" name="password" />
+        <input type="submit" value="Вход" />
+    </form>
+{% endblock %}

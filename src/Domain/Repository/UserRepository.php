@@ -40,7 +40,7 @@ class UserRepository extends AbstractRepository
     public function getUserByLoginPassword(string $login, string $password): ?User
     {
         return $this->getResult(
-            'SELECT * FROM ~table WHERE username = :login AND password = :password',
+            'SELECT * FROM ~table WHERE name = :login AND password = :password',
             [ 'login' => $login, 'password' => \md5($password) ]
         );
     }

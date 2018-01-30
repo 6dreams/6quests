@@ -26,7 +26,9 @@ class Quest
 {
     use RichModelTrait;
 
-    public const STATE_UNKNOWN = 0;
+    public const STATE_UNKNOWN  = 0;
+    public const STATE_ACTIVE   = 5;
+    public const STATE_FINISHED = 10;
 
     /**
      * @var int

@@ -25,7 +25,8 @@ class DatabaseUserTransformer implements DatabaseTransformerInterface
             ->setName($data['name'] ?? '')
             ->setFirstName($data['firstname'] ?? '')
             ->setLastName($data['lastname'] ?? '')
-            ->setPassword($data['password'] ?? '');
+            ->setPassword($data['password'] ?? '')
+            ->setRole($data['role'] ?? 0);
     }
 
     /**

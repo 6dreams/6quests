@@ -8,7 +8,11 @@ login_form:
     methods: [ 'GET' ]
     controller: SixQuests\Action\LoginAction:form
 
-index:
-    path: /
+coord_index:
+    path: /coord
     controller: SixQuests\Action\RootController
+
+root_index:
+    path: /
+    controller: SixQuests\Action\AdminAction:questSelect
 

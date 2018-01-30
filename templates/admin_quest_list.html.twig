@@ -1,0 +1,13 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+    {{ parent() }} — Список квестов
+{% endblock %}
+
+{% block body %}
+    {% if quests | length > 0 %}
+
+    {% else %}
+        нет квестов
+    {% endif %}
+{% endblock %}

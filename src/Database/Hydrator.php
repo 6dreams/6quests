@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace SixQuests\Database;
 
 use SixQuests\Database\Exception\NotSupportedModelException;
+use SixQuests\Domain\Transformer\DatabaseQuestTransformer;
 use SixQuests\Domain\Transformer\DatabaseUserTransformer;
 
 /**
@@ -20,12 +21,15 @@ class Hydrator
     /**
      * Hydrator constructor.
      *
-     * @param DatabaseUserTransformer $userTransformer
+     * @param DatabaseUserTransformer  $userTransformer
+     * @param DatabaseQuestTransformer $questTransformer
      */
     public function __construct(
-        DatabaseUserTransformer $userTransformer
+        DatabaseUserTransformer $userTransformer,
+        DatabaseQuestTransformer $questTransformer
     ) {
         $this->hydrators[$userTransformer->getModel()] = $userTransformer;
+        $this->hydrators[$questTransformer->getModel()] = $questTransformer;
     }
 
     /**
