@@ -81,6 +81,17 @@ abstract class AbstractRepository
     }
 
     /**
+     * Получить сущность по ID.
+     *
+     * @param int $id
+     * @return mixed
+     */
+    public function getById(int $id)
+    {
+        return $this->getResult('SELECT * FROM ~table WHERE id=:id', ['id' => $id]);
+    }
+
+    /**
      * Стандартный класс, который обслуживает репозиторий.
      *
      * @return string

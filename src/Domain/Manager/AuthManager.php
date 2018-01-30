@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace SixQuests\Domain\Manager;
 
 use SixQuests\Domain\Exception\NoAuthException;
+use SixQuests\Domain\Exception\RedirectException;
 use SixQuests\Domain\Model\User;
 use SixQuests\Domain\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -92,5 +93,18 @@ class AuthManager
         $this->session->set('user_id', $user->getId());
 
         return $user;
+    }
+
+    /**
+     * Проверить является ли пользователь админом.
+     *
+     * @throws RedirectException
+     */
+    public function checkAdminAuth(): void
+    {
+        $user = $this->getUser();
+        if (!$user || !$user->isAdmin()) {
+            throw new RedirectException($user);
+        }
     }
 }

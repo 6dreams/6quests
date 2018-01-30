@@ -3,11 +3,13 @@ declare(strict_types = 1);
 
 namespace SixQuests\Action;
 
-use SixQuests\Domain\Exception\NoAuthException;
+use SixQuests\Domain\Exception\RedirectException;
 use SixQuests\Domain\Manager\AuthManager;
 use SixQuests\Domain\Manager\QuestManager;
-use SixQuests\Responder\AdminQuestListResponder;
+use SixQuests\Responder\Admin\AdminQuestListResponder;
+use SixQuests\Responder\Admin\AdminQuestViewResponder;
 use SixQuests\Responder\RedirectResponder;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -56,14 +58,22 @@ class AdminAction
     public function questSelect(): Response
     {
         try {
-            $user = $this->authManager->getThrowableUser();
-            if (!$user->isAdmin()) {
-                return ($this->redirector)($user);
-            }
-        } catch (NoAuthException $e) {
-            return ($this->redirector)();
+            $this->authManager->checkAdminAuth();
+        } catch (RedirectException $e) {
+            return ($this->redirector)($e->getUser());
         }
 
         return ($this->responder)($this->questManager->getAdminQuests());
+    }
+
+    public function questView(Request $request, AdminQuestViewResponder $responder): Response
+    {
+        try {
+            $this->authManager->checkAdminAuth();
+        } catch (RedirectException $e) {
+            return ($this->redirector)($e->getUser());
+        }
+
+        return $responder($this->questManager->getQuest((int) $request->get('id')));
     }
 }

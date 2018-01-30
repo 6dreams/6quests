@@ -1,8 +1,9 @@
 <?php
 declare(strict_types = 1);
 
-namespace SixQuests\Responder;
+namespace SixQuests\Responder\Admin;
 
+use SixQuests\Responder\AbstractResponder;
 use Symfony\Component\HttpFoundation\Response;
 
 /**

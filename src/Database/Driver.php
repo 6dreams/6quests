@@ -62,6 +62,7 @@ class Driver
 
         $this->pdo->setAttribute(\PDO::ATTR_STRINGIFY_FETCHES, false);
         $this->pdo->setAttribute(\PDO::ATTR_EMULATE_PREPARES, false);
+        $this->pdo->setAttribute(\PDO::ERRMODE_EXCEPTION, true);
     }
 
     /**

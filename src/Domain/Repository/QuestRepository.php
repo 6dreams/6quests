@@ -7,6 +7,9 @@ use SixQuests\Domain\Model\Quest;
 
 /**
  * Class QuestRepository
+ *
+ * @method Quest getById(int $questId);
+ *
  * @package SixQuests\Domain\Repository
  */
 class QuestRepository extends AbstractRepository
@@ -32,7 +35,7 @@ class QuestRepository extends AbstractRepository
     public function getNotFinishedQuests(): array
     {
         return $this->getResults(
-            'SELECT * FROM ~table WHERE (state < :finished) OR (state = :finished AND `date` > :few_days) ORDER BY (state)',
+            'SELECT * FROM ~table WHERE state < :finished OR `date` > :few_days ORDER BY (state)',
             [
                 'finished' => Quest::STATE_FINISHED,
                 'few_days' => new \DateTime('now -3day')

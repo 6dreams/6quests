@@ -5,8 +5,12 @@
 {% endblock %}
 
 {% block body %}
-    {% if quests | length > 0 %}
-
+    {% if quests|length > 0 %}
+        {% for quest in quests %}
+            <li>
+                <a href="{{ path('quest_view', {'id' : quest.id}) }}">{{ quest.name }}</a>: {{ quest.stateName }} - {{ quest.date | date('d.m.Y') }}
+            </li>
+        {% endfor %}
     {% else %}
         нет квестов
     {% endif %}

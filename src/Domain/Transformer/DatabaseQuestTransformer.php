@@ -24,7 +24,7 @@ class DatabaseQuestTransformer implements DatabaseTransformerInterface
             ->setId($data['id'] ?? 0)
             ->setName($data['name'] ?? '')
             ->setDate(new \DateTime($data['date']) ?? null)
-            ->setState($data['id'] ?? Quest::STATE_UNKNOWN);
+            ->setState($data['state'] ?? Quest::STATE_UNKNOWN);
     }
 
     /**

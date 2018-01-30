@@ -49,4 +49,21 @@ class Quest
      * @var int
      */
     protected $state;
+
+    /**
+     * Текстовое описание состояния.
+     *
+     * @return string
+     */
+    public function getStateName(): string
+    {
+        switch ($this->state) {
+            case self::STATE_UNKNOWN:
+                return 'не начат';
+            case self::STATE_ACTIVE:
+                return 'начат';
+            default:
+                return 'завершён';
+        }
+    }
 }

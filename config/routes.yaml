@@ -16,3 +16,7 @@ root_index:
     path: /
     controller: SixQuests\Action\AdminAction:questSelect
 
+quest_view:
+    path: /quest/{id}
+    controller: SixQuests\Action\AdminAction:questView
+
