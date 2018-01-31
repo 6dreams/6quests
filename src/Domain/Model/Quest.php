@@ -28,6 +28,8 @@ class Quest
 
     public const TABLE = 'quests';
 
+    public const FIELDS = ['id', 'name', 'date', 'state'];
+
     public const STATE_UNKNOWN  = 0;
     public const STATE_ACTIVE   = 5;
     public const STATE_FINISHED = 10;

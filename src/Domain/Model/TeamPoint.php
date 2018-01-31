@@ -34,6 +34,8 @@ class TeamPoint
 
     public const TABLE = 'team_points';
 
+    public const FIELDS = ['id', 'arrived', 'departed', 'hints_used', 'team_id', 'point_id'];
+
     /**
      * @var int
      */
@@ -52,7 +54,7 @@ class TeamPoint
     /**
      * @var int
      */
-    protected $hintUsed;
+    protected $hintsUsed;
 
     /**
      * @var int

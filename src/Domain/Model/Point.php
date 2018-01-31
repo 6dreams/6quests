@@ -40,6 +40,8 @@ class Point
 
     public const TABLE = 'points';
 
+    public const FIELDS = ['id', 'name', 'time_limit', 'hints', 'hint_cost', 'skip_cost', 'user_id', 'quest_id'];
+
     /**
      * @var int
      */

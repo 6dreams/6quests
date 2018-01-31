@@ -37,24 +37,20 @@ abstract class AbstractDatabaseTransformer implements DatabaseTransformerInterfa
      */
     protected function build(string $table, ?int $id = null): Query
     {
-        $query = '';
+        $names = [];
         $args = [];
         if ($id) {
             foreach ($this->fields as $name => $value) {
-                $query .= \sprintf(
-                    '%1$s `%2$s`=:value_%2$s',
-                    $query === '' ? '' : ',',
-                    $name
-                );
+                $query[] = \sprintf('`%1$s`=:value_%1$s', $name);
                 $args['value_' . $name] = $value;
             }
             $this->fields = [];
 
-            return new Query('UPDATE `' . $table . '` ' . $query . ' WHERE `id`=:where_id', $args);
+            return new Query(\sprintf('UPDATE `%s` SET %s WHERE `id`=:where_id', $table, \implode(', ', $query)), $args);
         }
 
         $args['where_id'] = $id;
-        $names = $values = [];
+        $values = [];
         foreach ($this->fields as $name => $value) {
             $names[] = '`' . $name .'`';
             $values[] = ':value_' . $name;
@@ -62,7 +58,7 @@ abstract class AbstractDatabaseTransformer implements DatabaseTransformerInterfa
         }
 
         return new Query(\sprintf(
-            'INSERT INTO %s (%s) VALUES (%s)',
+            'INSERT INTO `%s` (%s) VALUES (%s)',
             $table,
             \implode(', ', $names),
             \implode(', ', $values)

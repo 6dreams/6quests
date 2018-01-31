@@ -1,0 +1,18 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+    {{ parent() }} - {{ point.name }}
+{% endblock %}
+
+{% block body %}
+    <h2>Точка &laquo;{{ point.name }}&raquo;</h2>
+    <div>{% if point.hints > 0 %}Подсказок: {{ point.hints }}, стоимость каждой {{ point.hintCost }} мин., п{% else %}П{% endif %}ропуск точки стоит: {{ point.skipCost }}.</div>
+
+    <h2>Команды</h2>
+    {% for info in infos %}
+    <div>
+        {{ info.team.name }}
+    </div>
+    {% endfor %}
+{% endblock %}
+

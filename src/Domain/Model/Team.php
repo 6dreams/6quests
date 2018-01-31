@@ -31,6 +31,8 @@ class Team
 
     public const TABLE = 'teams';
 
+    public const FIELDS = ['id', 'name', 'number', 'color', 'quest'];
+
     /**
      * @var int
      */

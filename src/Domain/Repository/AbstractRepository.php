@@ -18,9 +18,9 @@ abstract class AbstractRepository
     protected $driver;
 
     /**
-     * @var string
+     * @var array метатаблица!
      */
-    protected static $table = '';
+    private $modelMetaTable = [];
 
     /**
      * AbstractRepository constructor.
@@ -35,11 +35,12 @@ abstract class AbstractRepository
     /**
      * Получить название таблицы учитывая префикс.
      *
+     * @param string $model
      * @return string
      */
-    protected function getTable(): string
+    protected function getTable(string $model): string
     {
-        return $this->driver->getPrefix() . static::$table;
+        return '`' . $this->driver->getPrefix() . ($model)::TABLE . '`';
     }
 
     /**
@@ -54,6 +55,26 @@ abstract class AbstractRepository
     }
 
     /**
+     * Получить описание модели.
+     *
+     * @param string $model
+     * @return array
+     */
+    private function getMetaTable(string $model): array
+    {
+        if (!\array_key_exists($model, $this->modelMetaTable)) {
+            $table = $this->getTable($model);
+            $fields = \implode(', ', \array_map(function (string $key) use ($table) {
+                return \sprintf('%s.`%s`', $table, $key);
+            }, ($model)::FIELDS));
+
+            $this->modelMetaTable[$model] = [$table, $fields];
+        }
+
+        return $this->modelMetaTable[$model];
+    }
+
+    /**
      * Получить результаты.
      *
      * @param string      $query
@@ -63,7 +84,16 @@ abstract class AbstractRepository
      */
     protected function getResults(string $query, array $args = [], ?string $model = null)
     {
-        return $this->driver->executeFind($this->getModel($model), str_replace('~table', $this->getTable(), $query), $args);
+        $model = $this->getModel($model);
+
+        $replace = $this->getMetaTable($model);
+        $replace['&'] = $this->driver->getPrefix();
+
+        return $this->driver->executeFind(
+            $model,
+            \str_replace(['~table', '~fields', '&'], $replace, $query),
+            $args
+        );
     }
 
     /**

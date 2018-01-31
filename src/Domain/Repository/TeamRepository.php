@@ -15,8 +15,6 @@ use SixQuests\Domain\Model\Team;
  */
 class TeamRepository extends AbstractRepository
 {
-    protected static $table = Team::TABLE;
-
     /**
      * {@inheritdoc}
      */

@@ -1,25 +1,36 @@
+# Авторизация.
 login:
     path: /login
     methods: [ 'POST' ]
     controller: SixQuests\Action\LoginAction:login
 
+# Форма входа в аккаунт
 login_form:
     path: /login
     methods: [ 'GET' ]
     controller: SixQuests\Action\LoginAction:form
 
+# Список точек для координатора.
 coord_index:
-    path: /coord
-    controller: SixQuests\Action\RootController
+    path: /points
+    controller: SixQuests\Action\PointAction:pointList
 
+# Корень админки.
 root_index:
     path: /
     controller: SixQuests\Action\AdminAction:questSelect
 
+# Просмотр квеста админом.
 quest_view:
     path: /quest/{id}
     controller: SixQuests\Action\AdminAction:questView
 
+# Запуск квеста админом.
 quest_start:
     path: /quest/{id}/start
     controller: SixQuests\Action\AdminAction:questStart
+
+# Просмотр и управление точкой для координатора.
+point_view:
+    path: /point/{id}
+    controller: SixQuests\Action\PointAction:pointView

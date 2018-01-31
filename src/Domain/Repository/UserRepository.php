@@ -16,11 +16,6 @@ use SixQuests\Domain\Model\User;
 class UserRepository extends AbstractRepository
 {
     /**
-     * @var string Название таблицы в базе.
-     */
-    protected static $table = User::TABLE;
-
-    /**
      * Получить пользователя по логину или паролю.
      *
      * @param string $login
@@ -30,7 +25,7 @@ class UserRepository extends AbstractRepository
     public function getUserByLoginPassword(string $login, string $password): ?User
     {
         return $this->getResult(
-            'SELECT * FROM ~table WHERE name = :login AND password = :password',
+            'SELECT ~fields FROM ~table WHERE name = :login AND password = :password',
             [ 'login' => $login, 'password' => \md5($password) ]
         );
     }

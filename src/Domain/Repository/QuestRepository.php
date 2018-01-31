@@ -16,11 +16,6 @@ use SixQuests\Domain\Model\Quest;
 class QuestRepository extends AbstractRepository
 {
     /**
-     * @var string Название таблицы в базе.
-     */
-    protected static $table = Quest::TABLE;
-
-    /**
      * {@inheritdoc}
      */
     protected function getDefaultModel(): string

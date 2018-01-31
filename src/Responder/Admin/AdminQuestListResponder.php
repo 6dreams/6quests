@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class AdminQuestListResponder extends AbstractResponder
 {
-    protected static $content = 'admin_quest_list.html.twig';
+    protected static $content = 'admin/quest_list.html.twig';
 
     /**
      * @param array $quests

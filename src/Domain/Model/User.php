@@ -34,6 +34,8 @@ class User
 
     public const TABLE = 'users';
 
+    public const FIELDS = ['id', 'name', 'password', 'firstname', 'lastname', 'role'];
+
     // пользователь является админом.
     private const ROLE_ADMIN = 1;
 

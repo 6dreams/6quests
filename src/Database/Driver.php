@@ -150,6 +150,9 @@ class Driver
     private function executeQuery(string $query, array $args): \PDOStatement
     {
         $statement = $this->pdo->prepare($query);
+        if (!$statement) {
+            echo print_r($this->pdo->errorInfo(), true);
+        }
 
         foreach ($args as $key => $value) {
             $value = $this->processValue($value);

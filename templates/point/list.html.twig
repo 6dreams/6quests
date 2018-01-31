@@ -1,0 +1,12 @@
+{% extends "base.html.twig" %}
+
+{% block title %}{{ parent() }} - Список точек{% endblock %}
+
+{% block body %}
+    <h2>Список точек</h2>
+    {% if points|length == 0 %}
+        На данный момент, нет точек в которых вы можете учавствовать.
+    {% else %}
+        <li><a href="{{ path('point_view', { 'id': point.id }) }}">{{ point.name }}</a></li>
+    {% endif %}
+{% endblock %}
