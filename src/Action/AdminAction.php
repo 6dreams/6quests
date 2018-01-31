@@ -76,4 +76,15 @@ class AdminAction
 
         return $responder($this->questManager->getQuest((int) $request->get('id')));
     }
+
+    public function questStart(Request $request)
+    {
+        try {
+            $this->authManager->checkAdminAuth();
+        } catch (RedirectException $e) {
+            return ($this->redirector)($e->getUser());
+        }
+
+        return new Response('eda');
+    }
 }

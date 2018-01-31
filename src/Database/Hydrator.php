@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace SixQuests\Database;
 
+use SixQuests\Database\DTO\Query;
 use SixQuests\Database\Exception\NotSupportedModelException;
 use SixQuests\Domain\Transformer\DatabasePointTransformer;
 use SixQuests\Domain\Transformer\DatabaseQuestTransformer;
@@ -59,5 +60,22 @@ class Hydrator
         }
 
         return $this->hydrators[$model]->transform($data);
+    }
+
+    /**
+     * Превратить объект в запрос в базу, для создания или сохранения его там.
+     *
+     * @param mixed $model
+     * @return Query
+     * @throws NotSupportedModelException
+     */
+    public function dehydrate($model): Query
+    {
+        $class = \get_class($model);
+        if (!\array_key_exists($class, $this->hydrators)) {
+            throw new NotSupportedModelException($class);
+        }
+
+        return $this->hydrators[$class]->detransform($model);
     }
 }

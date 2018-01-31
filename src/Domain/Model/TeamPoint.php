@@ -32,6 +32,8 @@ class TeamPoint
 {
     use RichModelTrait;
 
+    public const TABLE = 'team_points';
+
     /**
      * @var int
      */

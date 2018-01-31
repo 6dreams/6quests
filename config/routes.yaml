@@ -20,3 +20,6 @@ quest_view:
     path: /quest/{id}
     controller: SixQuests\Action\AdminAction:questView
 
+quest_start:
+    path: /quest/{id}/start
+    controller: SixQuests\Action\AdminAction:questStart

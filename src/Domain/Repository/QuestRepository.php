@@ -9,6 +9,7 @@ use SixQuests\Domain\Model\Quest;
  * Class QuestRepository
  *
  * @method Quest getById(int $questId);
+ * @method bool upsert(Quest $model);
  *
  * @package SixQuests\Domain\Repository
  */
@@ -17,7 +18,7 @@ class QuestRepository extends AbstractRepository
     /**
      * @var string Название таблицы в базе.
      */
-    protected static $table = 'quests';
+    protected static $table = Quest::TABLE;
 
     /**
      * {@inheritdoc}

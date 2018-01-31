@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace SixQuests\Domain\Repository;
 
 use SixQuests\Database\Driver;
+use SixQuests\Database\Exception\NotSupportedModelException;
 
 /**
  * Class AbstractRepository
@@ -89,6 +90,23 @@ abstract class AbstractRepository
     public function getById(int $id)
     {
         return $this->getResult('SELECT * FROM ~table WHERE id=:id', ['id' => $id]);
+    }
+
+    /**
+     * Обновить или создать модель в базе.
+     *
+     * @param mixed $model
+     * @return bool
+     */
+    public function upsert($model): bool
+    {
+        try {
+            $this->driver->executeUpsert($model);
+        } catch (NotSupportedModelException $e) {
+            return false;
+        }
+
+        return true;
     }
 
     /**

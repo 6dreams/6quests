@@ -32,6 +32,8 @@ class User
 {
     use RichModelTrait;
 
+    public const TABLE = 'users';
+
     // пользователь является админом.
     private const ROLE_ADMIN = 1;
 

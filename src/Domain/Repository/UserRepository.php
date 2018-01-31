@@ -7,6 +7,10 @@ use SixQuests\Domain\Model\User;
 
 /**
  * Class UserRepository
+ *
+ * @method User getById(int $id);
+ * @method bool upsert(User $model);
+ *
  * @package SixQuests\Domain\Repository
  */
 class UserRepository extends AbstractRepository
@@ -14,21 +18,7 @@ class UserRepository extends AbstractRepository
     /**
      * @var string Название таблицы в базе.
      */
-    protected static $table = 'users';
-
-    /**
-     * Получить пользователя по его ID.
-     *
-     * @param int $id
-     * @return null|User
-     */
-    public function getUserById(int $id): ?User
-    {
-        return $this->getResult(
-            'SELECT * FROM ~table WHERE id = :id',
-            ['id' => $id]
-        );
-    }
+    protected static $table = User::TABLE;
 
     /**
      * Получить пользователя по логину или паролю.

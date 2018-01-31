@@ -106,14 +106,7 @@ class Driver
     {
         $this->connect();
 
-        $statement = $this->pdo->prepare($query);
-
-        foreach ($args as $key => $value) {
-            $value = $this->processValue($value);
-            $statement->bindValue($key, $value, \is_int($value) ? \PDO::PARAM_INT : \PDO::PARAM_STR);
-        }
-
-        $statement->execute();
+        $statement = $this->executeQuery($query, $args);
 
         $results = [];
         foreach ($statement->fetchAll(\PDO::FETCH_ASSOC) as $result) {
@@ -124,6 +117,20 @@ class Driver
     }
 
     /**
+     * Создать или обновить модель в базе.
+     *
+     * @todo: вернуть rows/insert_id?
+     * @param mixed $model
+     * @throws NotSupportedModelException
+     */
+    public function executeUpsert($model): void
+    {
+        $this->connect();
+        $query = $this->hydrator->dehydrate($model);
+        $this->executeQuery($query->getQuery(), $query->getArguments());
+    }
+
+    /**
      * Получение Prefix
      *
      * @return string
@@ -131,5 +138,25 @@ class Driver
     public function getPrefix(): string
     {
         return $this->prefix;
+    }
+
+    /**
+     * Создать PDO запрос и выполнить его.
+     *
+     * @param string $query
+     * @param array $args
+     * @return \PDOStatement
+     */
+    private function executeQuery(string $query, array $args): \PDOStatement
+    {
+        $statement = $this->pdo->prepare($query);
+
+        foreach ($args as $key => $value) {
+            $value = $this->processValue($value);
+            $statement->bindValue($key, $value, \is_int($value) ? \PDO::PARAM_INT : \PDO::PARAM_STR);
+        }
+        $statement->execute();
+
+        return $statement;
     }
 }

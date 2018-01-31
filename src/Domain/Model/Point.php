@@ -38,6 +38,8 @@ class Point
 {
     use RichModelTrait;
 
+    public const TABLE = 'points';
+
     /**
      * @var int
      */

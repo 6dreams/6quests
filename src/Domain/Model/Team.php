@@ -29,6 +29,8 @@ class Team
 {
     use RichModelTrait;
 
+    public const TABLE = 'teams';
+
     /**
      * @var int
      */

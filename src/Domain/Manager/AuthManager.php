@@ -44,7 +44,7 @@ class AuthManager
      */
     public function getUser(): ?User
     {
-        return $this->users->getUserById((int) $this->session->get('user_id'));
+        return $this->users->getById((int) $this->session->get('user_id'));
     }
 
     /**

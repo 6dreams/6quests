@@ -3,14 +3,14 @@ declare(strict_types = 1);
 
 namespace SixQuests\Domain\Transformer;
 
-use SixQuests\Database\DatabaseTransformerInterface;
+use SixQuests\Database\DTO\Query;
 use SixQuests\Domain\Model\Point;
 
 /**
  * Class DatabasePointTransformer
  * @package SixQuests\Domain\Transformer
  */
-class DatabasePointTransformer implements DatabaseTransformerInterface
+class DatabasePointTransformer extends AbstractDatabaseTransformer
 {
     /**
      * Преобразует массив из базы в объект точки квеста.
@@ -27,9 +27,27 @@ class DatabasePointTransformer implements DatabaseTransformerInterface
             ->setHintCost($data['hint_cost'] ?? 0)
             ->setSkipCost($data['skip_cost'] ?? 0)
             ->setTimeLimit($data['time_limit'] ?? 0)
-            ->setQuest($data['id'] ?? 0)
+            ->setQuest($data['quest_id'] ?? 0)
             ->setUser($data['user_id'] ?? 0);
     }
+
+    /**
+     * {@inheritdoc}
+     * @param Point $point
+     */
+    public function detransform($point): Query
+    {
+        return $this
+            ->addField('name', $point->getName())
+            ->addField('hints', $point->getHints())
+            ->addField('hint_cost', $point->getHintCost())
+            ->addField('skip_cost', $point->getSkipCost())
+            ->addField('time_limit', $point->getTimeLimit())
+            ->addField('quest_id', $point->getQuest())
+            ->addField('user_id', $point->getUser())
+            ->build(Point::TABLE, $point->getId());
+    }
+
 
     /**
      * {@inheritdoc}
