@@ -4,9 +4,9 @@
 
 {% block body %}
     <h2>Список точек</h2>
-    {% if points|length == 0 %}
-        На данный момент, нет точек в которых вы можете учавствовать.
-    {% else %}
+    {% for point in points %}
         <li><a href="{{ path('point_view', { 'id': point.id }) }}">{{ point.name }}</a></li>
+    {% else %}
+        На данный момент, нет точек в которых вы можете учавствовать.
     {% endif %}
 {% endblock %}

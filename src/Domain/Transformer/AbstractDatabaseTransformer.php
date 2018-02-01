@@ -45,11 +45,11 @@ abstract class AbstractDatabaseTransformer implements DatabaseTransformerInterfa
                 $args['value_' . $name] = $value;
             }
             $this->fields = [];
+            $args['where_id'] = $id;
 
             return new Query(\sprintf('UPDATE `%s` SET %s WHERE `id`=:where_id', $table, \implode(', ', $query)), $args);
         }
 
-        $args['where_id'] = $id;
         $values = [];
         foreach ($this->fields as $name => $value) {
             $names[] = '`' . $name .'`';

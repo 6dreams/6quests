@@ -34,3 +34,21 @@ quest_start:
 point_view:
     path: /point/{id}
     controller: SixQuests\Action\PointAction:pointView
+
+# JS, координатор: команда прибыла на точку
+team_arrived:
+    path: /team/arrive
+    methods: [ 'POST' ]
+    controller: SixQuests\Action\TeamAction:teamArrived
+
+# JS, координатор: команда завершила квест
+team_departed:
+    path: /team/depart
+    methods: [ 'POST' ]
+    controller: SixQuests\Action\TeamAction:teamDeparted
+
+# JS, координатор: запрос подсказки
+team_hint:
+    path: /team/hint
+    methods: [ 'POST' ]
+    controller: SixQuests\Action\TeamAction:teamAskHint

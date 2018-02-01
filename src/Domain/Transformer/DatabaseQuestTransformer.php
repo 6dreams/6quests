@@ -23,7 +23,7 @@ class DatabaseQuestTransformer extends AbstractDatabaseTransformer
         return (new Quest())
             ->setId($data['id'] ?? 0)
             ->setName($data['name'] ?? '')
-            ->setDate(new \DateTime($data['date']) ?? null)
+            ->setDate($data['date'] ? new \DateTime($data['date']) : null)
             ->setState($data['state'] ?? Quest::STATE_UNKNOWN);
     }
 

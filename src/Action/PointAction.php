@@ -109,6 +109,9 @@ class PointAction
 
         $point = $this->pointManager->getActivePoint((int) $request->get('id'), $user);
 
-        return $responder($point, $this->teamManager->getTeamInfoByTeamPoints($this->teamPointManager->getTeamsByPoints($point)));
+        return $responder($point, $this->teamManager->getTeamInfoByTeamPoints(
+            $this->teamPointManager->getTeamsByPoints($point),
+            $point
+        ));
     }
 }

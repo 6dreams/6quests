@@ -1,6 +1,6 @@
 # 6quests
 ## Description
-Simple web site for making offline quests more simplier.
+Simple web site for making offline quests managment more simplier. Originally created for [nostops.ru](http://nostops.ru)
 
 ## Installing
 ```

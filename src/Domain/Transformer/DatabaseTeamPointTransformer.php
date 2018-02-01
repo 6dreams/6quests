@@ -22,8 +22,8 @@ class DatabaseTeamPointTransformer extends AbstractDatabaseTransformer
     {
         return (new TeamPoint())
             ->setId($data['id'] ?? 0)
-            ->setArrived($data['arrived'] ?? null)
-            ->setDeparted($data['departed'] ?? null)
+            ->setArrived($data['arrived'] ? new \DateTime($data['arrived']) : null)
+            ->setDeparted($data['departed'] ? new \DateTime($data['departed']) : null)
             ->setHintsUsed($data['hints_used'] ?? 0)
             ->setPoint($data['point_id'] ?? 0)
             ->setTeam($data['team_id'] ?? 0);

@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace SixQuests\Domain\Repository;
 
 use SixQuests\Domain\Model\Point;
+use SixQuests\Domain\Model\Team;
 use SixQuests\Domain\Model\TeamPoint;
 
 /**
@@ -36,6 +37,25 @@ class TeamPointRepository extends AbstractRepository
             ->getResults(
                 'SELECT ~fields FROM ~table WHERE `point_id`=:point_id',
                 [ 'point_id' => $point->getId() ]
+            );
+    }
+
+    /**
+     * Найти точку команды по точке и команде.
+     *
+     * @param Team  $team
+     * @param Point $point
+     * @return array|mixed
+     */
+    public function getTeamPointByTeamAndPoint(Team $team, Point $point): ?TeamPoint
+    {
+        return $this
+            ->getResult(
+                'SELECT ~fields FROM ~table WHERE `point_id`=:point_id AND `team_id`=:team_id',
+                [
+                    'team_id' => $team->getId(),
+                    'point_id' => $point->getId()
+                ]
             );
     }
 }

@@ -1,8 +1,6 @@
 {% extends "base.html.twig" %}
 
-{% block title %}
-    {{ parent() }} - {{ point.name }}
-{% endblock %}
+{% block title %}{{ parent() }} - {{ point.name }}{% endblock %}
 
 {% block body %}
     <h2>Точка &laquo;{{ point.name }}&raquo;</h2>
@@ -11,8 +9,25 @@
     <h2>Команды</h2>
     {% for info in infos %}
     <div>
-        {{ info.team.name }}
+        <h4>{{ info.team.name }} (№{{ info.team.number }})</h4>
+        <div id="team{{ info.team.id }}n" style="{% if info.data.arrived != null %}display:none{% endif %}">
+            <a href="javascript:" onclick="points.clickArrived({{ info.team.id }})">Отметить прибытие</a>
+        </div>
+        <div id="team{{ info.team.id }}a" style="{% if info.data.arrived == null %}display:none{% endif %}">
+            Прибыли на точку <span id="team{{ info.team.id }}a-date">{{ info.data.arrived | date('d.m.Y H:i') }}</span>
+        </div>
+        <div id="team{{ info.team.id }}f" style="{% if not info.isFinished %}display:none{% endif %}">
+            <a href="javascript:" onclick="">Загадка решена</a>
+        </div>
     </div>
     {% endfor %}
 {% endblock %}
 
+{% block javascripts %}
+    {{ parent() }}
+    <script src="/js/point.js"></script>
+    <script type="text/javascript">
+        window.point = { id: {{ point.id }}, time: {{ point.timeLimit }} };
+        window.teams = [{% for info in infos %}{{ info.JSON|json_encode|raw }}{% if not loop.last %},{% endif %}{% endfor %}];
+    </script>
+{% endblock %}
