@@ -78,7 +78,7 @@ class TeamInfo
             return (new DateTimeSpecification(
                 (clone $this->data->getArrived())->modify(\sprintf('+%dminutes', $this->point->getTimeLimit())),
                 new \DateTime()
-            ))->more();
+            ))->less();
         }
 
         return false;
@@ -94,8 +94,9 @@ class TeamInfo
         return [
             'id' => $this->team->getId(),
             'arrived' => $this->data->getArrived() ? $this->data->getArrived()->getTimestamp() : null,
-            'departed' => $this->data->getDeparted() ? $this->data->getDeparted()->getTimestamp() : null,
-            'finished' => $this->getIsFinished()
+            'departed' => $this->data->getDeparted() ? $this->data->getDeparted()->format('d.m.Y H:i') : null,
+            'finished' => $this->getIsFinished(),
+            'hints' => $this->data->getHintsUsed()
         ];
     }
 }
