@@ -60,10 +60,25 @@ class Team
     protected $questId;
 
     /**
-     * @return array|mixed
+     * Team constructor.
      */
-    public function getQuest()
+    public function __construct()
     {
-        return $this->getRelation('');
+        $this->createRelation(
+            ModelInterface::RELATION_ONE2ONE,
+            Quest::class,
+            'questId',
+            'SELECT * FROM &' . Quest::TABLE . ' WHERE id = :arg1'
+        );
+    }
+
+    /**
+     * Получить квест
+     *
+     * @return null|Quest
+     */
+    public function getQuest(): ?Quest
+    {
+        return $this->getRelation('questId');
     }
 }

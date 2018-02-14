@@ -56,8 +56,8 @@ class Driver
 
         $this->pdo = new \PDO(
             \sprintf('mysql:host=%s;dbname=%s', $this->config->getHost(), $this->config->getDatabase()),
-            $this->config->getUser(),
-            $this->config->getPassword()
+            (string) $this->config->getUser(),
+            (string) $this->config->getPassword()
         );
 
         $this->pdo->setAttribute(\PDO::ATTR_STRINGIFY_FETCHES, false);

@@ -88,7 +88,9 @@ class Point implements ModelInterface
      */
     public function __construct()
     {
-        $this->createRelation(self::RELATION_ONE2ONE, User::class, 'user_id', 'SELECT * FROM &' . User::TABLE . ' WHERE id = :arg1', ['userId']);
+        $this
+            ->createRelation(self::RELATION_ONE2ONE, User::class, 'userId', 'SELECT * FROM &' . User::TABLE . ' WHERE id = :arg1')
+            ->createRelation(self::RELATION_ONE2ONE, Quest::class, 'questId', 'SELECT * FROM &' . Quest::TABLE . ' WHERE id = :arg1');
     }
 
     /**
@@ -98,6 +100,16 @@ class Point implements ModelInterface
      */
     public function getUser(): ?User
     {
-        return $this->getRelation('user_id');
+        return $this->getRelation('userId');
+    }
+
+    /**
+     * Получить квест.
+     *
+     * @return null|Quest
+     */
+    public function getQuest(): ?Quest
+    {
+        return $this->getRelation('questId');
     }
 }

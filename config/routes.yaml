@@ -53,10 +53,17 @@ team_hint:
     methods: [ 'POST' ]
     controller: SixQuests\Action\TeamAction:teamAskHint
 
+# Гланая страница админки.
+editor_main:
+    path: /editor
+    controller: SixQuests\Action\EditorAction:editorList
+
+# Страница админки со списком.
 editor_list:
     path: /editor/{model}
     controller: SixQuests\Action\EditorAction:editorList
 
+# Страница редактирования в админке.
 editor_edit:
     path: /editor/{model}/edit{id}
     controller: SixQuests\Action\EditorAction:editorEdit

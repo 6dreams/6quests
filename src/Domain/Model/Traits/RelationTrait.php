@@ -65,18 +65,21 @@ trait RelationTrait
      * @param string $name
      * @param string $query
      * @param array  $args
+     * @return $this
      */
-    protected function createRelation(int $type, string $fcqn, string $name, string $query, array $args = [])
+    protected function createRelation(int $type, string $fcqn, string $name, string $query, array $args = []): self
     {
         if (!\count($args)) {
             $args[] = $name;
         }
 
-        $this->relations['user_id'] = [
+        $this->relations[$name] = [
             'type'  => $type,
             'query' => $query,
             'model' => $fcqn,
             'args'  => $args
         ];
+
+        return $this;
     }
 }

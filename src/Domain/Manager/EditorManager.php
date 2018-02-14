@@ -100,9 +100,12 @@ class EditorManager
                     ->addField(new EditorField('skipCost', EditorField::TYPE_INPUT, 'Цена пропуска точки'))
                     ->addField(
                         (new EditorField('user', EditorField::TYPE_DB_SELECT))
-                            ->setCustomTemplate('editor/editor_list_value_quest_user.html.twig')
+                            ->setCustomTemplate('editor/editor_list_value_link_user.html.twig')
                     )
-                    ->addField(new EditorField('quest', EditorField::TYPE_DB_SELECT));
+                    ->addField(
+                        (new EditorField('quest', EditorField::TYPE_DB_SELECT))
+                            ->setCustomTemplate('editor/editor_list_value_link_quest.html.twig')
+                    );
                 break;
             case Quest::class:
                 $model
@@ -122,6 +125,16 @@ class EditorManager
                     ->addField(
                         (new EditorField('role', EditorField::TYPE_SELECT, 'Роль'))
                             ->setValues([User::ROLE_USER => 'Координатор', User::ROLE_ADMIN => 'Админ'])
+                    );
+                break;
+            case Team::class:
+                $model
+                    ->addField(new EditorField('name', EditorField::TYPE_INPUT, 'Название'))
+                    ->addField(new EditorField('number', EditorField::TYPE_INPUT, 'Номер'))
+                    ->addField(new EditorField('color', EditorField::TYPE_INPUT, 'Цвет'))
+                    ->addField(
+                        (new EditorField('quest', EditorField::TYPE_DB_SELECT, 'Квест'))
+                            ->setCustomTemplate('editor/editor_list_value_link_quest.html.twig')
                     );
                 break;
         }

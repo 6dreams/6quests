@@ -66,4 +66,34 @@ class TeamPoint
      * @var int
      */
     protected $pointId;
+
+    /**
+     * TeamPoint constructor.
+     */
+    public function __construct()
+    {
+        $this
+            ->createRelation(ModelInterface::RELATION_ONE2ONE, Team::class, 'teamId', 'SELECT * FROM &' . Team::TABLE . " WHERE id = :arg1")
+            ->createRelation(ModelInterface::RELATION_ONE2ONE, Point::class, 'pointId', 'SELECT * FROM &' . Point::TABLE . " WHERE id = :arg1");
+    }
+
+    /**
+     * Получить команду.
+     *
+     * @return null|Team
+     */
+    public function getTeam(): ?Team
+    {
+        return $this->getRelation('teamId');
+    }
+
+    /**
+     * Получить точку.
+     *
+     * @return null|Point
+     */
+    public function getPoint(): ?Point
+    {
+        return $this->getRelation('pointId');
+    }
 }
