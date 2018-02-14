@@ -1,0 +1,18 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+    {% include "editor/editor_menu.html.twig" with { menus: config.menu } %}
+    <table>
+        {% include "editor/editor_table_header.html.twig" with { header: heading } %}
+        {% for item in items %}
+            <tr>
+                {% for head in heading %}
+                    {% if head.isInList %}
+                    {% include "editor/editor_list_value.html.twig" with { info: head, item: item } %}
+                    {% endif %}
+                {% endfor %}
+                <td><a href="{{ path('editor_edit', { model: model, id: item.id }) }}">редактировать</a></td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace SixQuests\Domain\Model;
 
 use SixDreams\RichModel\Traits\RichModelTrait;
+use SixQuests\Domain\Model\Traits\RelationTrait;
 
 /**
  * Class Team
@@ -20,14 +21,14 @@ use SixDreams\RichModel\Traits\RichModelTrait;
  * @method string getColor();
  * @method Team setColor(string $color);
  *
- * @method int getQuest();
- * @method Team setQuest(int $quest);
+ * @method int getQuestId();
+ * @method Team setQuestId(int $quest);
  *
  * @package SixQuests\Domain\Model
  */
 class Team
 {
-    use RichModelTrait;
+    use RichModelTrait, RelationTrait;
 
     public const TABLE = 'teams';
 
@@ -56,5 +57,13 @@ class Team
     /**
      * @var int
      */
-    protected $quest;
+    protected $questId;
+
+    /**
+     * @return array|mixed
+     */
+    public function getQuest()
+    {
+        return $this->getRelation('');
+    }
 }

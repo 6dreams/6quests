@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace SixQuests\Domain\Model;
 
 use SixDreams\RichModel\Traits\RichModelTrait;
+use SixQuests\Domain\Model\Traits\RelationTrait;
 
 /**
  * Class Quest
@@ -24,7 +25,7 @@ use SixDreams\RichModel\Traits\RichModelTrait;
  */
 class Quest
 {
-    use RichModelTrait;
+    use RichModelTrait, RelationTrait;
 
     public const TABLE = 'quests';
 
@@ -69,5 +70,15 @@ class Quest
             default:
                 return 'завершён';
         }
+    }
+
+    /**
+     * Получить дату строкой.
+     *
+     * @return string
+     */
+    public function getDateString()
+    {
+        return $this->date ? $this->date->format('d.m.Y h:i') : '';
     }
 }

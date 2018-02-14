@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace SixQuests\Domain\Model;
 
 use SixDreams\RichModel\Traits\RichModelTrait;
+use SixQuests\Domain\Model\Traits\RelationTrait;
 
 /**
  * Class Point
@@ -26,17 +27,17 @@ use SixDreams\RichModel\Traits\RichModelTrait;
  * @method int getSkipCost();
  * @method Point setSkipCost(int $cost);
  *
- * @method int getUser();
- * @method Point setUser(int $id);
+ * @method int getUserId();
+ * @method Point setUserId(int $id);
  *
- * @method int getQuest();
- * @method Point setQuest(int $id);
+ * @method int getQuestId();
+ * @method Point setQuestId(int $id);
  *
  * @package SixQuests\Domain\Model
  */
-class Point
+class Point implements ModelInterface
 {
-    use RichModelTrait;
+    use RichModelTrait, RelationTrait;
 
     public const TABLE = 'points';
 
@@ -75,10 +76,28 @@ class Point
     /**
      * @var int
      */
-    protected $user;
+    protected $userId;
 
     /**
      * @var int
      */
-    protected $quest;
+    protected $questId;
+
+    /**
+     * Point constructor.
+     */
+    public function __construct()
+    {
+        $this->createRelation(self::RELATION_ONE2ONE, User::class, 'user_id', 'SELECT * FROM &' . User::TABLE . ' WHERE id = :arg1', ['userId']);
+    }
+
+    /**
+     * Получить юзера.
+     *
+     * @return null|User
+     */
+    public function getUser(): ?User
+    {
+        return $this->getRelation('user_id');
+    }
 }

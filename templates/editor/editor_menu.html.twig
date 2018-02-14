@@ -1,0 +1,7 @@
+<ul class="topmenu">
+{% for item in menus %}
+    <li>
+        <a href="{{ item.link }}">{{ item.text }}</a>
+    </li>
+{% endfor %}
+</ul>

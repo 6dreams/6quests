@@ -110,7 +110,7 @@ class Driver
 
         $results = [];
         foreach ($statement->fetchAll(\PDO::FETCH_ASSOC) as $result) {
-            $results[] = $this->hydrator->hydrate($model, $result);
+            $results[] = $this->hydrator->hydrate($model, $result)->setDriver($this);
         }
 
         return $results;

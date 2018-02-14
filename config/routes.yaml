@@ -52,3 +52,11 @@ team_hint:
     path: /team/hint
     methods: [ 'POST' ]
     controller: SixQuests\Action\TeamAction:teamAskHint
+
+editor_list:
+    path: /editor/{model}
+    controller: SixQuests\Action\EditorAction:editorList
+
+editor_edit:
+    path: /editor/{model}/edit{id}
+    controller: SixQuests\Action\EditorAction:editorEdit

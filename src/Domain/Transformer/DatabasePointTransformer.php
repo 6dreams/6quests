@@ -27,8 +27,8 @@ class DatabasePointTransformer extends AbstractDatabaseTransformer
             ->setHintCost($data['hint_cost'] ?? 0)
             ->setSkipCost($data['skip_cost'] ?? 0)
             ->setTimeLimit($data['time_limit'] ?? 0)
-            ->setQuest($data['quest_id'] ?? 0)
-            ->setUser($data['user_id'] ?? 0);
+            ->setQuestId($data['quest_id'] ?? 0)
+            ->setUserId($data['user_id'] ?? 0);
     }
 
     /**
@@ -43,8 +43,8 @@ class DatabasePointTransformer extends AbstractDatabaseTransformer
             ->addField('hint_cost', $point->getHintCost())
             ->addField('skip_cost', $point->getSkipCost())
             ->addField('time_limit', $point->getTimeLimit())
-            ->addField('quest_id', $point->getQuest())
-            ->addField('user_id', $point->getUser())
+            ->addField('quest_id', $point->getQuestId())
+            ->addField('user_id', $point->getUserId())
             ->build(Point::TABLE, $point->getId());
     }
 

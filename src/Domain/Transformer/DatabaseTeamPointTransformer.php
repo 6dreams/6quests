@@ -25,8 +25,8 @@ class DatabaseTeamPointTransformer extends AbstractDatabaseTransformer
             ->setArrived($data['arrived'] ? new \DateTime($data['arrived']) : null)
             ->setDeparted($data['departed'] ? new \DateTime($data['departed']) : null)
             ->setHintsUsed($data['hints_used'] ?? 0)
-            ->setPoint($data['point_id'] ?? 0)
-            ->setTeam($data['team_id'] ?? 0);
+            ->setPointId($data['point_id'] ?? 0)
+            ->setTeamId($data['team_id'] ?? 0);
     }
 
     /**
@@ -39,8 +39,8 @@ class DatabaseTeamPointTransformer extends AbstractDatabaseTransformer
             ->addField('arrived', $teamPoint->getArrived())
             ->addField('departed', $teamPoint->getDeparted())
             ->addField('hints_used', $teamPoint->getHintsUsed())
-            ->addField('point_id', $teamPoint->getPoint())
-            ->addField('team_id', $teamPoint->getTeam())
+            ->addField('point_id', $teamPoint->getPointId())
+            ->addField('team_id', $teamPoint->getTeamId())
             ->build(TeamPoint::TABLE, $teamPoint->getId());
     }
 

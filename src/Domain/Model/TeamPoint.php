@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace SixQuests\Domain\Model;
 
 use SixDreams\RichModel\Traits\RichModelTrait;
+use SixQuests\Domain\Model\Traits\RelationTrait;
 
 /**
  * Class TeamPoint
@@ -20,17 +21,17 @@ use SixDreams\RichModel\Traits\RichModelTrait;
  * @method int getHintsUsed();
  * @method TeamPoint setHintsUsed(int $amount);
  *
- * @method int getTeam();
- * @method TeamPoint setTeam(int $id);
+ * @method int getTeamId();
+ * @method TeamPoint setTeamId(int $id);
  *
- * @method int getPoint();
- * @method TeamPoint setPoint(int $id);
+ * @method int getPointId();
+ * @method TeamPoint setPointId(int $id);
  *
  * @package SixQuests\Domain\Model
  */
 class TeamPoint
 {
-    use RichModelTrait;
+    use RichModelTrait, RelationTrait;
 
     public const TABLE = 'team_points';
 
@@ -59,10 +60,10 @@ class TeamPoint
     /**
      * @var int
      */
-    protected $team;
+    protected $teamId;
 
     /**
      * @var int
      */
-    protected $point;
+    protected $pointId;
 }

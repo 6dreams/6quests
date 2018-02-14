@@ -70,7 +70,7 @@ class TeamManager
     public function getTeamInfoByTeamPoints(array $teamPoints, Point $point): array
     {
         return \array_map(function (TeamPoint $tp) use ($point) {
-            return $this->getTeamInfo($this->getTeam($tp->getTeam()), $point, $tp);
+            return $this->getTeamInfo($this->getTeam($tp->getTeamId()), $point, $tp);
         }, $teamPoints);
     }
 }

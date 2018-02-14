@@ -25,7 +25,7 @@ class DatabaseTeamTransformer extends AbstractDatabaseTransformer
             ->setName($data['name'] ?? '')
             ->setColor($data['color'] ?? '')
             ->setNumber($data['number'] ?? 0)
-            ->setQuest($data['quest_id'] ?? 0);
+            ->setQuestId($data['quest_id'] ?? 0);
     }
 
     /**
@@ -38,7 +38,7 @@ class DatabaseTeamTransformer extends AbstractDatabaseTransformer
             ->addField('name', $team->getName())
             ->addField('color', $team->getColor())
             ->addField('number', $team->getNumber())
-            ->addField('quest_id', $team->getQuest())
+            ->addField('quest_id', $team->getQuestId())
             ->build(Team::TABLE, $team->getId());
     }
 

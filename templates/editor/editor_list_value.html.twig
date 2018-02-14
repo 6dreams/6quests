@@ -1,0 +1,13 @@
+<td>
+    {% if info.customTemplate %}
+        {{ include(info.customTemplate, { data: attribute(item, info.propertyName), info: info }) }}
+    {% else %}
+        {% if info.type == constant('SixQuests\\Domain\\Editor\\EditorField::TYPE_SELECT') %}
+            {{ info.getNameOf(attribute(item, info.propertyName)) }}
+        {% elseif info.type == constant('SixQuests\\Domain\\Editor\\EditorField::TYPE_DB_SELECT') %}
+            remove me later
+        {% else %}
+            {{ attribute(item, info.propertyName) }}
+        {% endif %}
+    {% endif %}
+</td>

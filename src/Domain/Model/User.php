@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace SixQuests\Domain\Model;
 
 use SixDreams\RichModel\Traits\RichModelTrait;
+use SixQuests\Domain\Model\Traits\RelationTrait;
 
 /**
  * Class User
@@ -30,14 +31,15 @@ use SixDreams\RichModel\Traits\RichModelTrait;
  */
 class User
 {
-    use RichModelTrait;
+    use RichModelTrait, RelationTrait;
 
     public const TABLE = 'users';
 
     public const FIELDS = ['id', 'name', 'password', 'firstname', 'lastname', 'role'];
 
     // пользователь является админом.
-    private const ROLE_ADMIN = 1;
+    public const ROLE_ADMIN = 1;
+    public const ROLE_USER  = 0;
 
     /**
      * @var int
