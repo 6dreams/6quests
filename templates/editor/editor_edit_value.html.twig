@@ -1,0 +1,15 @@
+<div>
+    {% if field.type == constant('SixQuests\\Domain\\Editor\\EditorField::TYPE_INDEX') %}
+        {{ attribute(item, field.propertyName) }}
+    {% elseif field.type == constant('SixQuests\\Domain\\Editor\\EditorField::TYPE_INPUT') %}
+        <input name="{{ field.propertyName }}" value="{{ attribute(item, field.propertyName) }}" />
+    {% elseif field.type == constant('SixQuests\\Domain\\Editor\\EditorField::TYPE_SELECT') or field.type == constant('SixQuests\\Domain\\Editor\\EditorField::TYPE_DB_SELECT') %}
+        <select name="{{ field.propertyName }}">
+            {% for k, value in field.values %}
+                <option value="{{ k }}"{% if k == attribute(item, field.propertyName) %} selected{% endif %}>{{ value }}</option>
+            {% endfor %}
+        </select>
+    {% else %}
+        (unknown type for render)
+    {% endif %}
+</div>

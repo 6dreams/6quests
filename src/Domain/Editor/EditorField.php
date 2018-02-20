@@ -4,19 +4,21 @@ declare(strict_types = 1);
 namespace SixQuests\Domain\Editor;
 
 use SixDreams\RichModel\Traits\RichModelTrait;
+use SixQuests\Domain\Editor\DTO\RelationField;
 
 /**
  * Class EditorField
  *
  * @method string getName();
  * @method int getType();
- * @method bool isInList();
+ * @method int getDisplay();
  * @method string getTitle();
  * @method string getCustomTemplate();
  * @method self setCustomTemplate(string $info);
  * @method self setValues(array $args);
+ * @method RelationField getRelation();
+ * @method self setRelation(RelationField $ref);
  *
- * @package SixQuests\Domain\Editor
  */
 class EditorField
 {
@@ -27,6 +29,10 @@ class EditorField
     public const TYPE_INPUT     = 1;
     public const TYPE_SELECT    = 2;
     public const TYPE_DB_SELECT = 3;
+
+    public const DISPLAY_EDIT = 0;
+    public const DISPLAY_LIST = 1;
+    public const DISPLAY_ALL  = 3;
 
     /**
      * @var string
@@ -41,7 +47,7 @@ class EditorField
     /**
      * @var bool
      */
-    protected $inList;
+    protected $display;
 
     /**
      * @var string|null
@@ -59,6 +65,11 @@ class EditorField
     private $values = [];
 
     /**
+     * @var RelationField
+     */
+    protected $relation;
+
+    /**
      * EditorField constructor.
      *
      * @param string      $name
@@ -70,18 +81,19 @@ class EditorField
         $this->name = $name;
         $this->type = $type;
         $this->title = $title ?? $name;
-        $this->inList = true;
+        $this->display = self::DISPLAY_ALL;
     }
 
     /**
      * Отобразить в списке.
      *
-     * @param bool $state
+     * @param int $state
+     *
      * @return EditorField
      */
-    public function setVisibleInList(bool $state): self
+    public function setDisplay(int $state): self
     {
-        $this->inList = $state;
+        $this->display = $state;
 
         return $this;
     }
@@ -100,10 +112,27 @@ class EditorField
      * Значение списка.
      *
      * @param int|string $value
+     *
      * @return mixed|string
      */
     public function getNameOf($value)
     {
         return $this->values[$value] ?? '(broken)';
+    }
+
+    /**
+     * @return bool
+     */
+    public function isShowInEdit(): bool
+    {
+        return $this->display === self::DISPLAY_ALL || $this->display === self::DISPLAY_EDIT;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isShowInList(): bool
+    {
+        return $this->display === self::DISPLAY_ALL || $this->display === self::DISPLAY_LIST;
     }
 }

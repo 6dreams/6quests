@@ -1,0 +1,14 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+    {% include "editor/editor_menu.html.twig" with { menus: config.menu } %}
+    <form action="{{ path('editor_edit', { model: item.name, id: item.item.id }) }}" method="post">
+    {% for field in fields %}
+        {% if field.showInEdit %}
+            <div>{{ field.title }}</div>
+            {% include 'editor/editor_edit_value.html.twig' with { field: field, item: item.item } %}
+        {% endif %}
+    {% endfor %}
+        <input type="submit" value="Сохранить">
+    </form>
+{% endblock %}

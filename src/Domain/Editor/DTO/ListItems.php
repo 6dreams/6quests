@@ -10,8 +10,6 @@ use SixDreams\RichModel\Traits\RichModelTrait;
  *
  * @method string getName();
  * @method array getItems();
- *
- * @package SixQuests\Domain\Editor\DTO
  */
 class ListItems
 {

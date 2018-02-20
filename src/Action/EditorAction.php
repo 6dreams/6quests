@@ -4,14 +4,15 @@ declare(strict_types = 1);
 namespace SixQuests\Action;
 
 use SixQuests\Domain\Editor\ListRequest;
+use SixQuests\Domain\Editor\ModelRequest;
 use SixQuests\Domain\Manager\EditorManager;
+use SixQuests\Responder\Editor\EditorEditResponder;
 use SixQuests\Responder\Editor\EditorListResponder;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class EditorAction
- * @package SixQuests\Action
  */
 class EditorAction
 {
@@ -36,6 +37,7 @@ class EditorAction
      *
      * @param Request             $request
      * @param EditorListResponder $responder
+     *
      * @return Response
      */
     public function editorList(Request $request, EditorListResponder $responder): Response
@@ -47,10 +49,18 @@ class EditorAction
     }
 
     /**
-     * @param Request $request
+     * Отобразить модель для редактирования.
+     *
+     * @param Request             $request
+     * @param EditorEditResponder $responder
+     *
+     * @return Response
      */
-    public function editorEdit(Request $request)
+    public function editorEdit(Request $request, EditorEditResponder $responder): Response
     {
-        // stub!
+        return $responder(
+            $this->manager->getConfig(),
+            $this->manager->getItem(new ModelRequest($request))
+        );
     }
 }

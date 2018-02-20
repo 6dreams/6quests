@@ -12,7 +12,6 @@ use SixDreams\RichModel\Traits\RichModelTrait;
  * @method string getModel();
  * @method EditorField[] getFields();
  *
- * @package SixQuests\Domain\Editor
  */
 class EditorModel
 {

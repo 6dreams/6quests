@@ -4,11 +4,14 @@ declare(strict_types = 1);
 namespace SixQuests\Domain\Manager;
 
 use SixQuests\Database\Driver;
+use SixQuests\Domain\Editor\DTO\Item;
 use SixQuests\Domain\Editor\DTO\ListItems;
+use SixQuests\Domain\Editor\DTO\RelationField;
 use SixQuests\Domain\Editor\EditorConfig;
 use SixQuests\Domain\Editor\EditorField;
 use SixQuests\Domain\Editor\EditorModel;
 use SixQuests\Domain\Editor\ListRequest;
+use SixQuests\Domain\Editor\ModelRequest;
 use SixQuests\Domain\Model\Point;
 use SixQuests\Domain\Model\Quest;
 use SixQuests\Domain\Model\Team;
@@ -16,7 +19,6 @@ use SixQuests\Domain\Model\User;
 
 /**
  * Class EditorManager
- * @package SixQuests\Domain\Manager
  */
 class EditorManager
 {
@@ -53,6 +55,7 @@ class EditorManager
      * Получить список для отображения.
      *
      * @param ListRequest $request
+     *
      * @return ListItems
      */
     public function getListItems(ListRequest $request): ListItems
@@ -67,9 +70,54 @@ class EditorManager
     }
 
     /**
+     * Получить информацию по модели для редактирования.
+     *
+     * @param ModelRequest $request
+     *
+     * @return Item
+     */
+    public function getItem(ModelRequest $request): Item
+    {
+        $model = $this->getModel($request->getModel());
+
+        $item = $this->driver->executeFind(
+            $model,
+            \sprintf('SELECT * FROM %s%s WHERE id = :id', $this->driver->getPrefix(), $model::TABLE),
+            [ 'id' => $request->getId() ]
+        )[0] ?? null;
+
+        if (!$item) {
+            $item = new $model();
+        }
+
+        return new Item($model, $item);
+    }
+
+    /**
+     * Получить конфигурацию админки.
+     *
+     * @return EditorConfig
+     */
+    public function getConfig(): EditorConfig
+    {
+        foreach (self::MAPPINGS as $name => $map) {
+            $this
+                ->config
+                ->addMenuItem($name, $map[1]);
+
+            $this->config->addModel($this->getModelDefinition($map[0]));
+        }
+
+
+
+        return $this->config;
+    }
+
+    /**
      * Возвращает FCQN модели.
      *
      * @param string $plan
+     *
      * @return string
      */
     private function getModel(string $plan): string
@@ -83,6 +131,7 @@ class EditorManager
 
     /**
      * @param string $name
+     *
      * @return EditorModel
      */
     private function getModelDefinition(string $name): EditorModel
@@ -100,11 +149,23 @@ class EditorManager
                     ->addField(new EditorField('skipCost', EditorField::TYPE_INPUT, 'Цена пропуска точки'))
                     ->addField(
                         (new EditorField('user', EditorField::TYPE_DB_SELECT))
+                            ->setDisplay(EditorField::DISPLAY_LIST)
                             ->setCustomTemplate('editor/editor_list_value_link_user.html.twig')
                     )
                     ->addField(
+                        (new EditorField('userId', EditorField::TYPE_DB_SELECT))
+                            ->setDisplay(EditorField::DISPLAY_EDIT)
+                            ->setRelation(new RelationField(User::class, 'getName'))
+                    )
+                    ->addField(
                         (new EditorField('quest', EditorField::TYPE_DB_SELECT))
+                            ->setDisplay(EditorField::DISPLAY_LIST)
                             ->setCustomTemplate('editor/editor_list_value_link_quest.html.twig')
+                    )
+                    ->addField(
+                        (new EditorField('questId', EditorField::TYPE_DB_SELECT))
+                            ->setDisplay(EditorField::DISPLAY_EDIT)
+                            ->setRelation(new RelationField(Quest::class, 'getName'))
                     );
                 break;
             case Quest::class:
@@ -134,31 +195,17 @@ class EditorManager
                     ->addField(new EditorField('color', EditorField::TYPE_INPUT, 'Цвет'))
                     ->addField(
                         (new EditorField('quest', EditorField::TYPE_DB_SELECT, 'Квест'))
+                            ->setDisplay(EditorField::DISPLAY_LIST)
                             ->setCustomTemplate('editor/editor_list_value_link_quest.html.twig')
+                    )
+                    ->addField(
+                        (new EditorField('questId', EditorField::TYPE_DB_SELECT, 'Квест'))
+                            ->setDisplay(EditorField::DISPLAY_EDIT)
+                            ->setRelation(new RelationField(Quest::class, 'getName'))
                     );
                 break;
         }
 
         return $model;
-    }
-
-    /**
-     * Получить конфигурацию админки.
-     *
-     * @return EditorConfig
-     */
-    public function getConfig(): EditorConfig
-    {
-        foreach (self::MAPPINGS as $name => $map) {
-            $this
-                ->config
-                ->addMenuItem($name, $map[1]);
-
-            $this->config->addModel($this->getModelDefinition($map[0]));
-        }
-
-
-
-        return $this->config;
     }
 }

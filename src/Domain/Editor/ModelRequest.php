@@ -7,33 +7,39 @@ use SixDreams\RichModel\Traits\RichModelTrait;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * Class ListRequest
+ * Class ModelRequest
  *
  * @method string getModel();
- * @method int getOffset();
+ * @method int getId();
  */
-class ListRequest
+class ModelRequest
 {
     use RichModelTrait;
 
     /**
-     * @var string|null
+     * @var Request
+     */
+    protected $request;
+
+    /**
+     * @var string
      */
     protected $model;
 
     /**
      * @var int
      */
-    protected $offset;
+    protected $id;
 
     /**
-     * ListRequest constructor.
+     * ModelRequest constructor.
      *
      * @param Request $request
      */
     public function __construct(Request $request)
     {
-        $this->model = $request->get('model');
-        $this->offset = $request->get('offset', 0);
+        $this->request = $request;
+        $this->model = $request->get('model', '');
+        $this->id = (int) $request->get('id', 0);
     }
 }

@@ -7,7 +7,7 @@
         {% for item in items %}
             <tr>
                 {% for head in heading %}
-                    {% if head.isInList %}
+                    {% if head.showInList %}
                     {% include "editor/editor_list_value.html.twig" with { info: head, item: item } %}
                     {% endif %}
                 {% endfor %}
