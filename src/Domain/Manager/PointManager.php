@@ -10,7 +10,6 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Class PointManager
- * @package SixQuests\Domain\Manager
  */
 class PointManager
 {
@@ -33,6 +32,7 @@ class PointManager
      * Получить активные точки доступные пользователю.
      *
      * @param User $user
+     *
      * @return Point[]
      */
     public function getActivePointsByUser(User $user): array
@@ -45,7 +45,9 @@ class PointManager
      *
      * @param int  $id
      * @param User $user
+     *
      * @throws NotFoundHttpException
+     *
      * @return Point
      */
     public function getActivePoint(int $id, User $user): Point
@@ -59,6 +61,16 @@ class PointManager
         }
 
         return $point;
+    }
+
+    /**
+     * Получить репозиторий.
+     *
+     * @return PointRepository
+     */
+    public function getRepository(): PointRepository
+    {
+        return $this->points;
     }
 
     /**

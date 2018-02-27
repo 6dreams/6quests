@@ -42,4 +42,16 @@ class ModelRequest
         $this->model = $request->get('model', '');
         $this->id = (int) $request->get('id', 0);
     }
+
+    /**
+     * Получеть значение поля.
+     *
+     * @param string $name
+     *
+     * @return mixed
+     */
+    public function get(string $name)
+    {
+        return $this->request->get($name);
+    }
 }

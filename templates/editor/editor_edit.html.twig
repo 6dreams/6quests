@@ -2,7 +2,7 @@
 
 {% block body %}
     {% include "editor/editor_menu.html.twig" with { menus: config.menu } %}
-    <form action="{{ path('editor_edit', { model: item.name, id: item.item.id }) }}" method="post">
+    <form action="{{ path('editor_edit', { model: model, id: item.item.id }) }}" method="post">
     {% for field in fields %}
         {% if field.showInEdit %}
             <div>{{ field.title }}</div>

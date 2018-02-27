@@ -109,6 +109,16 @@ class EditorField
     }
 
     /**
+     * Название сеттера в модели.
+     *
+     * @return string
+     */
+    public function getSetterName(): string
+    {
+        return 'set' . ucfirst($this->name);
+    }
+
+    /**
      * Значение списка.
      *
      * @param int|string $value

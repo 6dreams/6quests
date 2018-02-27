@@ -12,7 +12,6 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Class TeamManager
- * @package SixQuests\Domain\Manager
  */
 class TeamManager
 {
@@ -35,6 +34,7 @@ class TeamManager
      * Получить команду по ID.
      *
      * @param int $id
+     *
      * @return Team
      */
     public function getTeam(int $id): Team
@@ -53,6 +53,7 @@ class TeamManager
      * @param Team      $team
      * @param Point     $point
      * @param TeamPoint $teamPoint
+     *
      * @return TeamInfo
      */
     public function getTeamInfo(Team $team, Point $point, TeamPoint $teamPoint): TeamInfo
@@ -61,10 +62,21 @@ class TeamManager
     }
 
     /**
+     * Получить репозиторий.
+     *
+     * @return TeamRepository
+     */
+    public function getRepository(): TeamRepository
+    {
+        return $this->teams;
+    }
+
+    /**
      * Получить информацию о команде на точке.
      *
      * @param TeamPoint[] $teamPoints
      * @param Point       $point
+     *
      * @return TeamInfo[]
      */
     public function getTeamInfoByTeamPoints(array $teamPoints, Point $point): array

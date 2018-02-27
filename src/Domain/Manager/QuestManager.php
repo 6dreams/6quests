@@ -9,7 +9,6 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Class QuestManager
- * @package SixQuests\Domain\Manager
  */
 class QuestManager
 {
@@ -42,6 +41,7 @@ class QuestManager
      * Получить квест по его ID.
      *
      * @param int $id
+     *
      * @return Quest
      */
     public function getQuest(int $id): Quest
@@ -53,5 +53,15 @@ class QuestManager
         }
 
         throw new NotFoundHttpException();
+    }
+
+    /**
+     * Начать квест.
+     *
+     * @param Quest $quest
+     */
+    public function startQuest(Quest $quest): void
+    {
+        $this->quests->upsert($quest->setState(Quest::STATE_ACTIVE));
     }
 }

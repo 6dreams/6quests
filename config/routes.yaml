@@ -63,7 +63,20 @@ editor_list:
     path: /editor/{model}
     controller: SixQuests\Action\EditorAction:editorList
 
+# Страница создания в админке.
+editor_create:
+    path: /editor/{model}/edit
+    methods: [ 'POST' ]
+    controller: SixQuests\Action\EditorAction:editorSave
+
+# Страница сохранения в админке.
+editor_save:
+    path: /editor/{model}/edit{id}
+    methods: [ 'POST' ]
+    controller: SixQuests\Action\EditorAction:editorSave
+
 # Страница редактирования в админке.
 editor_edit:
     path: /editor/{model}/edit{id}
+    methods: [ 'GET' ]
     controller: SixQuests\Action\EditorAction:editorEdit

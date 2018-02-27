@@ -94,6 +94,36 @@ class EditorManager
     }
 
     /**
+     * Сохранить изменения.
+     *
+     * @param ModelRequest $request
+     */
+    public function updateItem(ModelRequest $request): void
+    {
+        $model = $this->getModel($request->getModel());
+
+        if ($request->getId() <= 0) {
+            $object = new $model();
+        } else {
+            $object = $this->driver->executeFind(
+                $model,
+                \sprintf('SELECT * FROM %s%s WHERE id = :id', $this->driver->getPrefix(), $model::TABLE),
+                [ 'id' => $request->getId() ]
+            )[0] ?? new $model();
+        }
+
+        foreach ($this->getConfig()->getModel($model)->getFields() as $field) {
+            if ($field->getType() === EditorField::TYPE_INDEX || !$field->isShowInEdit()) {
+                continue;
+            }
+
+            $object->{$field->getSetterName()}($request->get($field->getPropertyName()));
+        }
+
+        $this->driver->executeUpsert($object);
+    }
+
+    /**
      * Получить конфигурацию админки.
      *
      * @return EditorConfig

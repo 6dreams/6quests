@@ -63,6 +63,7 @@ class EditorEditResponder extends AbstractEditorResponder
             ->prepare($config)
             ->setVariable('fields', $fields)
             ->setVariable('item', $item)
+            ->setVariable('model', $config->getShortNameByFCQN($item->getName()))
             ->render();
     }
 }

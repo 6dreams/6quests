@@ -13,7 +13,6 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Class TeamPointManager
- * @package SixQuests\Domain\Manager
  */
 class TeamPointManager
 {
@@ -34,6 +33,7 @@ class TeamPointManager
 
     /**
      * @param Point $point
+     *
      * @return array
      */
     public function getTeamsByPoints(Point $point): array
@@ -42,10 +42,27 @@ class TeamPointManager
     }
 
     /**
+     * Создать точку для команды.
+     *
+     * @param Team  $team
+     * @param Point $point
+     */
+    public function create(Team $team, Point $point): void
+    {
+        $this->teamPoints->upsert(
+            (new TeamPoint())
+                ->setHintsUsed(0)
+                ->setPointId($point->getId())
+                ->setTeamId($team->getId())
+        );
+    }
+
+    /**
      * Найти точку команды по точке и команде.
      *
      * @param Team  $team
      * @param Point $point
+     *
      * @return TeamPoint
      */
     public function getTeamPointByTeamAndPoint(Team $team, Point $point): TeamPoint
@@ -63,6 +80,7 @@ class TeamPointManager
      *
      * @param TeamPoint $teamPoint
      * @return TeamPoint
+     *
      * @throws LogicException
      */
     public function teamArrivePoint(TeamPoint $teamPoint): TeamPoint
@@ -80,7 +98,9 @@ class TeamPointManager
     /**
      * @param TeamPoint $teamPoint
      * @param Point     $point
+     *
      * @return bool
+     *
      * @throws LogicException
      */
     private function canModifyTeamOnPoint(TeamPoint $teamPoint, Point $point): bool
@@ -101,7 +121,9 @@ class TeamPointManager
      *
      * @param TeamPoint $teamPoint
      * @param Point     $point
+     *
      * @return TeamPoint
+     *
      * @throws LogicException
      */
     public function teamDepartPoint(TeamPoint $teamPoint, Point $point): TeamPoint
@@ -118,7 +140,9 @@ class TeamPointManager
      *
      * @param TeamPoint $teamPoint
      * @param Point     $point
+     *
      * @return TeamPoint
+     *
      * @throws LogicException
      */
     public function teamAskHint(TeamPoint $teamPoint, Point $point): TeamPoint

@@ -8,6 +8,7 @@ use SixQuests\Domain\Editor\ModelRequest;
 use SixQuests\Domain\Manager\EditorManager;
 use SixQuests\Responder\Editor\EditorEditResponder;
 use SixQuests\Responder\Editor\EditorListResponder;
+use SixQuests\Responder\RouteRedirectResponder;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -62,5 +63,22 @@ class EditorAction
             $this->manager->getConfig(),
             $this->manager->getItem(new ModelRequest($request))
         );
+    }
+
+    /**
+     * Сохранить модель в базе.
+     *
+     * @param Request                $request
+     * @param RouteRedirectResponder $responder
+     *
+     * @return Response
+     */
+    public function editorSave(Request $request, RouteRedirectResponder $responder): Response
+    {
+        $query = new ModelRequest($request);
+
+        $this->manager->updateItem($query);
+
+        return $responder('editor_list', ['model' => $query->getModel()]);
     }
 }
