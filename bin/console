@@ -16,7 +16,7 @@ if (!\class_exists(Application::class)) {
 }
 
 $input = new ArgvInput();
-$env = $input->getParameterOption(['--env', '-e'], $_SERVER['APP_ENV'] ?? 'dev');
+$env = $input->getParameterOption(['--env', '-e'], $_SERVER['APP_ENV'] ?? 'prod');
 $debug = ($_SERVER['APP_DEBUG'] ?? ('prod' !== $env)) && !$input->hasParameterOption(['--no-debug', '']);
 
 if ($debug) {

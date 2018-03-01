@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 require __DIR__.'/../vendor/autoload.php';
 
 
-$env = $_SERVER['APP_ENV'] ?? 'dev';
+$env = $_SERVER['APP_ENV'] ?? 'prod';
 $debug = $_SERVER['APP_DEBUG'] ?? ('prod' !== $env);
 
 if ($debug) {
