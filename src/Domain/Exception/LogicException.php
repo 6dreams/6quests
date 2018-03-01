@@ -5,7 +5,6 @@ namespace SixQuests\Domain\Exception;
 
 /**
  * Class LoginException
- * @package SixQuests\Domain\Exception
  */
 class LogicException extends \Exception
 {

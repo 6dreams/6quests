@@ -5,10 +5,10 @@ namespace SixQuests\Domain\Repository;
 
 use SixQuests\Database\Driver;
 use SixQuests\Database\Exception\NotSupportedModelException;
+use SixQuests\Domain\Utility\Utils;
 
 /**
  * Class AbstractRepository
- * @package SixQuests\Domain\Repository
  */
 abstract class AbstractRepository
 {
@@ -33,45 +33,33 @@ abstract class AbstractRepository
     }
 
     /**
-     * Получить название таблицы учитывая префикс.
+     * Получить сущность по ID.
      *
-     * @param string $model
-     * @return string
+     * @param int $id
+     *
+     * @return mixed
      */
-    protected function getTable(string $model): string
+    public function getById(int $id)
     {
-        return '`' . $this->driver->getPrefix() . ($model)::TABLE . '`';
+        return $this->getResult('SELECT * FROM ~table WHERE id=:id', ['id' => $id]);
     }
 
     /**
-     * Получить название класса который будет результатом.
+     * Обновить или создать модель в базе.
      *
-     * @param null|string $model
-     * @return string
-     */
-    private function getModel(?string $model): string
-    {
-        return $model ?? $this->getDefaultModel();
-    }
-
-    /**
-     * Получить описание модели.
+     * @param mixed $model
      *
-     * @param string $model
-     * @return array
+     * @return bool
      */
-    private function getMetaTable(string $model): array
+    public function upsert($model): bool
     {
-        if (!\array_key_exists($model, $this->modelMetaTable)) {
-            $table = $this->getTable($model);
-            $fields = \implode(', ', \array_map(function (string $key) use ($table) {
-                return \sprintf('%s.`%s`', $table, $key);
-            }, ($model)::FIELDS));
-
-            $this->modelMetaTable[$model] = [$table, $fields];
+        try {
+            $this->driver->executeUpsert($model);
+        } catch (NotSupportedModelException $e) {
+            return false;
         }
 
-        return $this->modelMetaTable[$model];
+        return true;
     }
 
     /**
@@ -80,6 +68,7 @@ abstract class AbstractRepository
      * @param string      $query
      * @param array       $args
      * @param null|string $model
+     *
      * @return array|mixed
      */
     protected function getResults(string $query, array $args = [], ?string $model = null)
@@ -102,6 +91,7 @@ abstract class AbstractRepository
      * @param string      $query
      * @param array       $args
      * @param null|string $model
+     *
      * @return mixed
      */
     protected function getResult(string $query, array $args = [], ?string $model = null)
@@ -112,31 +102,15 @@ abstract class AbstractRepository
     }
 
     /**
-     * Получить сущность по ID.
+     * Получить название таблицы учитывая префикс.
      *
-     * @param int $id
-     * @return mixed
-     */
-    public function getById(int $id)
-    {
-        return $this->getResult('SELECT * FROM ~table WHERE id=:id', ['id' => $id]);
-    }
-
-    /**
-     * Обновить или создать модель в базе.
+     * @param string $model
      *
-     * @param mixed $model
-     * @return bool
+     * @return string
      */
-    public function upsert($model): bool
+    protected function getTable(string $model): string
     {
-        try {
-            $this->driver->executeUpsert($model);
-        } catch (NotSupportedModelException $e) {
-            return false;
-        }
-
-        return true;
+        return '`' . $this->driver->getPrefix() . Utils::constant($model, 'TABLE') . '`';
     }
 
     /**
@@ -145,4 +119,37 @@ abstract class AbstractRepository
      * @return string
      */
     abstract protected function getDefaultModel(): string;
+
+    /**
+     * Получить название класса который будет результатом.
+     *
+     * @param null|string $model
+     *
+     * @return string
+     */
+    private function getModel(?string $model): string
+    {
+        return $model ?? $this->getDefaultModel();
+    }
+
+    /**
+     * Получить описание модели.
+     *
+     * @param string $model
+     *
+     * @return array
+     */
+    private function getMetaTable(string $model): array
+    {
+        if (!\array_key_exists($model, $this->modelMetaTable)) {
+            $table = $this->getTable($model);
+            $fields = \implode(', ', \array_map(function (string $key) use ($table) {
+                return \sprintf('%s.`%s`', $table, $key);
+            }, Utils::constant($model, 'FIELDS')));
+
+            $this->modelMetaTable[$model] = [$table, $fields];
+        }
+
+        return $this->modelMetaTable[$model];
+    }
 }

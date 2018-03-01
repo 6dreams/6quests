@@ -5,7 +5,6 @@ namespace SixQuests\Domain\Specification;
 
 /**
  * Class DateTimeSpecification
- * @package SixQuests\Domain\Specification
  */
 class DateTimeSpecification
 {

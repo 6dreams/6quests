@@ -7,7 +7,6 @@ use SixQuests\Domain\Repository\UserRepository;
 
 /**
  * Class UserManager
- * @package SixQuests\Domain\Manager
  */
 class UserManager
 {
@@ -16,8 +15,23 @@ class UserManager
      */
     private $repository;
 
+    /**
+     * UserManager constructor.
+     *
+     * @param UserRepository $repository
+     */
     public function __construct(UserRepository $repository)
     {
         $this->repository = $repository;
+    }
+
+    /**
+     * Получить пользовательский репозиторий.
+     *
+     * @return UserRepository
+     */
+    public function getRepository(): UserRepository
+    {
+        return $this->repository;
     }
 }

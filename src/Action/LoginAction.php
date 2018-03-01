@@ -12,7 +12,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class LoginAction
- * @package SixQuests\Action
  */
 class LoginAction
 {
@@ -36,6 +35,7 @@ class LoginAction
      *
      * @param AuthManager       $authManager
      * @param RedirectResponder $redirectResponder
+     * @param LoginResponder    $responder
      */
     public function __construct(AuthManager $authManager, RedirectResponder $redirectResponder, LoginResponder $responder)
     {
@@ -62,6 +62,7 @@ class LoginAction
      * Авторизовать пользователя.
      *
      * @param Request $request
+     *
      * @return Response
      */
     public function login(Request $request): Response

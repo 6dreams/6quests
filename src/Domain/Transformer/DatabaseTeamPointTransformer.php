@@ -8,7 +8,6 @@ use SixQuests\Domain\Model\TeamPoint;
 
 /**
  * Class DatabaseTeamPointTransformer
- * @package SixQuests\Domain\Transformer
  */
 class DatabaseTeamPointTransformer extends AbstractDatabaseTransformer
 {
@@ -16,6 +15,7 @@ class DatabaseTeamPointTransformer extends AbstractDatabaseTransformer
      * Преобразует массив из базы в объект команды на точке.
      *
      * @param array $data
+     *
      * @return TeamPoint
      */
     public function transform(array $data): TeamPoint

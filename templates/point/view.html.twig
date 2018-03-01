@@ -3,31 +3,35 @@
 {% block title %}{{ parent() }} — {{ point.name }}{% endblock %}
 
 {% block body %}
+    <div class="headbox">
     <h2>Точка &laquo;{{ point.name }}&raquo;</h2>
-    <div>{% if point.hints > 0 %}Подсказок: {{ point.hints }}, стоимость каждой {{ point.hintCost }} мин., п{% else %}П{% endif %}ропуск точки стоит: {{ point.skipCost }}.</div>
-
-    <h2>Команды</h2>
-    {% for info in infos %}
-    <div>
-        <h4>№{{ info.team.number }} — {{ info.team.name }}</h4>
-        <div id="team{{ info.team.id }}n" style="{% if info.data.arrived != null %}display:none{% endif %}">
-            <a href="javascript:" onclick="points.clickArrived({{ info.team.id }})">Отметить прибытие</a>
-        </div>
-        <div id="team{{ info.team.id }}a" style="{% if info.data.arrived == null %}display:none{% endif %}">
-            Прибыли на точку <span id="team{{ info.team.id }}a-date">{{ info.data.arrived | date('d.m.Y H:i') }}</span>
-            <div style="{% if point.hints > 0 %}{% else %}display:none{% endif %}">
-                Подсказок взято: <span id="team{{ info.team.id }}c">{{ info.data.hintsUsed }}</span>.
-                <a href="javascript:" id="team{{ info.team.id }}h" style="{% if info.data.hintsUsed >= point.hints or info.isFinished %}display:none{% endif %}" onclick="points.clickHint({{ info.team.id }})">Взять ещё подсказку</a>
-            </div>
-            <div id="team{{ info.team.id }}d" style="{% if info.data.departed == null %}display:none{% endif %}">
-                Решили загадку в <span id="team{{ info.team.id }}dc">{{ info.data.departed | date('d.m.Y H:i') }}</span>
-            </div>
-        </div>
-        <div id="team{{ info.team.id }}f" style="{% if info.isFinished %}display:none{% endif %}">
-            <a href="javascript:" onclick="">Загадка решена</a>, осталось времени <span id="team{{ info.team.id }}t"></span>.
-        </div>
+        {% if point.hints > 0 %}Подсказок: {{ point.hints }} (стоимость: {{ point.hintCost }} мин.), в{% else %}В{% endif %}ремя: {{ point.timeLimit }} мин., пропуск точки: {{ point.skipCost }} мин.
     </div>
+
+    {% for info in infos %}
+        <table class="teambox" id="team{{ info.team.id }}">
+            <tr>
+                <td style="width: 30px"><div class="num">№{{ info.team.number }}</div></td>
+                <td>
+                    <progress value="20" max="100" id="team{{ info.team.id }}progress"></progress>
+                </td>
+                <td style="width: 120px"><div class="button float" onclick="points.clickDepart({{ info.team.id }});">Финиш точки</div></td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                {% for i in 1..point.hints %}
+                    <span id="team{{ info.team.id }}hint{{ i }}" class="button" onclick="points.clickHint({{ info.team.id }});">Подсказка №{{ i }}</span>
+                {% endfor %}
+                </td>
+            </tr>
+        </table>
     {% endfor %}
+
+    <div class="teamlist">
+    {% for info in infos %}
+            <span class="button" id="team{{ info.team.id }}arr-ctl" onclick="points.clickArrived({{ info.team.id }})">{{ info.team.number }}</span>
+    {% endfor %}
+    </div>
 {% endblock %}
 
 {% block javascripts %}
@@ -38,6 +42,7 @@
         window.teams = [{% for info in infos %}{{ info.JSON|json_encode|raw }}{% if not loop.last %},{% endif %}{% endfor %}];
 
         $.ready(function () {
+            points.refreshAllTeams();
             points.tick();
         });
     </script>

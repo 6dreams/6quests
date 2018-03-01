@@ -8,7 +8,6 @@ use SixQuests\Responder\AbstractResponder;
 
 /**
  * Class AbstractEditorResponder
- * @package SixQuests\Responder\Editor
  */
 abstract class AbstractEditorResponder extends AbstractResponder
 {
@@ -18,7 +17,10 @@ abstract class AbstractEditorResponder extends AbstractResponder
     protected $config;
 
     /**
+     * Подготовить абстрактный responder.
+     *
      * @param EditorConfig $config
+     *
      * @return AbstractEditorResponder
      */
     protected function prepare(EditorConfig $config): self

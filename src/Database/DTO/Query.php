@@ -5,7 +5,6 @@ namespace SixQuests\Database\DTO;
 
 /**
  * Class Query
- * @package SixQuests\Database\DTO
  */
 class Query
 {

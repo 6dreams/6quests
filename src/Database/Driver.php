@@ -8,7 +8,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Class Driver
- * @package SixQuests\Database
  */
 class Driver
 {
@@ -46,26 +45,6 @@ class Driver
     }
 
     /**
-     * Подключиться к базе данных.
-     */
-    private function connect(): void
-    {
-        if ($this->pdo) {
-            return;
-        }
-
-        $this->pdo = new \PDO(
-            \sprintf('mysql:host=%s;dbname=%s', $this->config->getHost(), $this->config->getDatabase()),
-            (string) $this->config->getUser(),
-            (string) $this->config->getPassword()
-        );
-
-        $this->pdo->setAttribute(\PDO::ATTR_STRINGIFY_FETCHES, false);
-        $this->pdo->setAttribute(\PDO::ATTR_EMULATE_PREPARES, false);
-        $this->pdo->setAttribute(\PDO::ERRMODE_EXCEPTION, true);
-    }
-
-    /**
      * @param string $query
      */
     public function executeRawQuery(string $query): void
@@ -75,31 +54,14 @@ class Driver
     }
 
     /**
-     * Преобразовать параметр запроса к базе в строку или число.
-     *
-     * @param mixed $value
-     * @return string|int
-     */
-    protected function processValue($value)
-    {
-        if (\is_int($value)) {
-            return $value;
-        }
-
-        if ($value instanceof \DateTime) {
-            return $value->format('Y-m-d H:i:s');
-        }
-
-        return $value;
-    }
-
-    /**
      * Запустить поиск по базе.
      *
      * @param string $model
      * @param string $query
      * @param array  $args
+     *
      * @return array|mixed
+     *
      * @throws NotSupportedModelException
      */
     public function executeFind(string $model, string $query, array $args = [])
@@ -120,7 +82,9 @@ class Driver
      * Создать или обновить модель в базе.
      *
      * @todo: вернуть rows/insert_id?
+     *
      * @param mixed $model
+     *
      * @throws NotSupportedModelException
      */
     public function executeUpsert($model): void
@@ -141,10 +105,51 @@ class Driver
     }
 
     /**
+     * Преобразовать параметр запроса к базе в строку или число.
+     *
+     * @param mixed $value
+     *
+     * @return string|int
+     */
+    protected function processValue($value)
+    {
+        if (\is_int($value)) {
+            return $value;
+        }
+
+        if ($value instanceof \DateTime) {
+            return $value->format('Y-m-d H:i:s');
+        }
+
+        return $value;
+    }
+
+    /**
+     * Подключиться к базе данных.
+     */
+    private function connect(): void
+    {
+        if ($this->pdo) {
+            return;
+        }
+
+        $this->pdo = new \PDO(
+            \sprintf('mysql:host=%s;dbname=%s', $this->config->getHost(), $this->config->getDatabase()),
+            (string) $this->config->getUser(),
+            (string) $this->config->getPassword()
+        );
+
+        $this->pdo->setAttribute(\PDO::ATTR_STRINGIFY_FETCHES, false);
+        $this->pdo->setAttribute(\PDO::ATTR_EMULATE_PREPARES, false);
+        $this->pdo->setAttribute(\PDO::ERRMODE_EXCEPTION, true);
+    }
+
+    /**
      * Создать PDO запрос и выполнить его.
      *
      * @param string $query
-     * @param array $args
+     * @param array  $args
+     *
      * @return \PDOStatement
      */
     private function executeQuery(string $query, array $args): \PDOStatement

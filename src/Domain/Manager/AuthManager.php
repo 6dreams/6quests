@@ -11,7 +11,6 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 /**
  * Class AuthManager
- * @package SixQuests\Domain\Manager
  */
 class AuthManager
 {
@@ -51,6 +50,7 @@ class AuthManager
      * Получить залогиненного в системе пользователя или бросить исключение.
      *
      * @return User
+     *
      * @throws NoAuthException
      */
     public function getThrowableUser(): User
@@ -79,7 +79,9 @@ class AuthManager
      *
      * @param string $login
      * @param string $password
+     *
      * @return User
+     *
      * @throws NoAuthException
      */
     public function authUser(string $login, string $password): User

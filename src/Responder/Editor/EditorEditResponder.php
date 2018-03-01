@@ -7,6 +7,7 @@ use SixQuests\Database\Driver;
 use SixQuests\Domain\Editor\DTO\Item;
 use SixQuests\Domain\Editor\EditorConfig;
 use SixQuests\Domain\Editor\EditorField;
+use SixQuests\Domain\Utility\Utils;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -49,7 +50,7 @@ class EditorEditResponder extends AbstractEditorResponder
             if ($rel !== null && $field->getType() === EditorField::TYPE_DB_SELECT) {
                 $items = $this->driver->executeFind(
                     $rel->getModel(),
-                    \sprintf('SELECT * FROM %s%s', $this->driver->getPrefix(), $rel->getModel()::TABLE)
+                    \sprintf('SELECT * FROM %s%s', $this->driver->getPrefix(), Utils::constant($rel->getModel(), 'TABLE'))
                 );
                 $ret = [];
                 foreach ($items as $model) {

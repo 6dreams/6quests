@@ -12,23 +12,14 @@ use SixQuests\Domain\Model\TeamPoint;
  *
  * @method TeamPoint getById(int $id);
  * @method bool upsert(TeamPoint $model);
- *
- * @package SixQuests\Domain\Repository
  */
 class TeamPointRepository extends AbstractRepository
 {
     /**
-     * {@inheritdoc}
-     */
-    protected function getDefaultModel(): string
-    {
-        return TeamPoint::class;
-    }
-
-    /**
      * Получить информацию по командам на точке.
      *
      * @param Point $point
+     *
      * @return array
      */
     public function getTeamPointsByPoint(Point $point): array
@@ -45,6 +36,7 @@ class TeamPointRepository extends AbstractRepository
      *
      * @param Team  $team
      * @param Point $point
+     *
      * @return array|mixed
      */
     public function getTeamPointByTeamAndPoint(Team $team, Point $point): ?TeamPoint
@@ -57,5 +49,13 @@ class TeamPointRepository extends AbstractRepository
                     'point_id' => $point->getId()
                 ]
             );
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function getDefaultModel(): string
+    {
+        return TeamPoint::class;
     }
 }

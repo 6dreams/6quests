@@ -8,7 +8,6 @@ use SixQuests\Database\DTO\Query;
 
 /**
  * Class AbstractDatabaseTransformer
- * @package SixQuests\Domain\Transformer
  */
 abstract class AbstractDatabaseTransformer implements DatabaseTransformerInterface
 {
@@ -18,7 +17,8 @@ abstract class AbstractDatabaseTransformer implements DatabaseTransformerInterfa
      * Добавить поле для запроса.
      *
      * @param string $name
-     * @param $value
+     * @param mixed  $value
+     *
      * @return AbstractDatabaseTransformer
      */
     protected function addField(string $name, $value): self
@@ -31,8 +31,9 @@ abstract class AbstractDatabaseTransformer implements DatabaseTransformerInterfa
     /**
      * Создать upsert запрос к базе.
      *
-     * @param string $table
+     * @param string   $table
      * @param int|null $id
+     *
      * @return Query
      */
     protected function build(string $table, ?int $id = null): Query
@@ -47,7 +48,7 @@ abstract class AbstractDatabaseTransformer implements DatabaseTransformerInterfa
             $this->fields = [];
             $args['where_id'] = $id;
 
-            return new Query(\sprintf('UPDATE `%s` SET %s WHERE `id`=:where_id', $table, \implode(', ', $query)), $args);
+            return new Query(\sprintf('UPDATE `%s` SET %s WHERE `id`=:where_id', $table, \implode(', ', $query ?? [])), $args);
         }
 
         $values = [];

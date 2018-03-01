@@ -13,7 +13,6 @@ use SixQuests\Domain\Transformer\DatabaseUserTransformer;
 
 /**
  * Class Hydrator
- * @package SixQuests\Database
  */
 class Hydrator
 {
@@ -50,7 +49,9 @@ class Hydrator
      *
      * @param string $model
      * @param array  $data
+     *
      * @return mixed
+     *
      * @throws NotSupportedModelException
      */
     public function hydrate(string $model, array $data)
@@ -66,7 +67,9 @@ class Hydrator
      * Превратить объект в запрос в базу, для создания или сохранения его там.
      *
      * @param mixed $model
+     *
      * @return Query
+     *
      * @throws NotSupportedModelException
      */
     public function dehydrate($model): Query

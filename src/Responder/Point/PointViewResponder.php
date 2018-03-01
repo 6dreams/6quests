@@ -10,7 +10,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class PointViewResponder
- * @package SixQuests\Responder\Point
  */
 class PointViewResponder extends AbstractResponder
 {
@@ -24,6 +23,7 @@ class PointViewResponder extends AbstractResponder
      *
      * @param Point      $point
      * @param TeamInfo[] $teams
+     *
      * @return Response
      */
     public function __invoke(Point $point, array $teams): Response

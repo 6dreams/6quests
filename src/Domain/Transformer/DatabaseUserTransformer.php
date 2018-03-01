@@ -8,7 +8,6 @@ use SixQuests\Domain\Model\User;
 
 /**
  * Class DatabaseUserTransformer
- * @package SixQuests\Domain\Transformer
  */
 class DatabaseUserTransformer extends AbstractDatabaseTransformer
 {
@@ -16,6 +15,7 @@ class DatabaseUserTransformer extends AbstractDatabaseTransformer
      * Преобразовать массив в пользователя.
      *
      * @param array $data
+     *
      * @return User
      */
     public function transform(array $data): User
@@ -45,9 +45,18 @@ class DatabaseUserTransformer extends AbstractDatabaseTransformer
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function getModel(): string
+    {
+        return User::class;
+    }
+
+    /**
      * Хэшация пароля.
      *
      * @param User $user
+     *
      * @return string
      */
     private function getPassword(User $user): string
@@ -59,13 +68,5 @@ class DatabaseUserTransformer extends AbstractDatabaseTransformer
         }
 
         return $password;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getModel(): string
-    {
-        return User::class;
     }
 }

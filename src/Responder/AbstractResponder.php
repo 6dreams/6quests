@@ -8,7 +8,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class AbstractResponder
- * @package SixQuests\Responder
  */
 abstract class AbstractResponder
 {
@@ -38,19 +37,10 @@ abstract class AbstractResponder
     }
 
     /**
-     * Отрендерить текущую страницу.
-     *
-     * @return Response
-     */
-    protected function render(): Response
-    {
-        return new Response($this->twig->render(static::$content, $this->context));
-    }
-
-    /**
      * Сеттер для Context.
      *
      * @param array $context
+     *
      * @return $this
      */
     public function setContext(array $context)
@@ -65,6 +55,7 @@ abstract class AbstractResponder
      *
      * @param string $name
      * @param mixed  $value
+     *
      * @return AbstractResponder
      */
     public function setVariable(string $name, $value): self
@@ -72,5 +63,15 @@ abstract class AbstractResponder
         $this->context[$name] = $value;
 
         return $this;
+    }
+
+    /**
+     * Отрендерить текущую страницу.
+     *
+     * @return Response
+     */
+    protected function render(): Response
+    {
+        return new Response($this->twig->render(static::$content, $this->context));
     }
 }

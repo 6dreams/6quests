@@ -32,8 +32,6 @@ use SixQuests\Domain\Model\Traits\RelationTrait;
  *
  * @method int getQuestId();
  * @method Point setQuestId(int $id);
- *
- * @package SixQuests\Domain\Model
  */
 class Point implements ModelInterface
 {

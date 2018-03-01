@@ -1,6 +1,11 @@
 $ = {
     id: function(i){
-        return document.getElementById(i)
+        var e = document.getElementById(i);
+        if (!e) {
+            console.log('#' + i + ' not found!');
+        }
+
+        return e;
     },
     class: function(c) {
         return document.getElementsByClassName(c)
@@ -25,11 +30,37 @@ $ = {
         }
         request.send(fd);
     },
-    show: function(e,s) {
-        e.style.display = s ? '' : 'none';
+    hasClass: function(e, c) {
+        if (e.classList) {
+            return e.classList.contains(c);
+        } else {
+            return new RegExp('(^| )' + c + '( |$)', 'gi').test(e.className);
+        }
     },
-    hide: function (e) {
-        e.style.display='none';
+    addClass: function(e, c) {
+        if ($.hasClass(e, c)) {
+            return;
+        }
+
+        if (e.classList) {
+            e.classList.add(c);
+        } else {
+            e.className += ' ' + c;
+        }
+    },
+    removeClass: function(e, c) {
+        if (!$.hasClass(e, c)) {
+            return;
+        }
+
+        if (e.classList) {
+            e.classList.remove(c);
+        } else {
+            e.className = e.className.replace(new RegExp('(^|\\b)' + c.split(' ').join('|') + '(\\b|$)', 'gi'), ' ');
+        }
+    },
+    show: function(e,s) {
+        $.id(e).style.display = s ? '' : 'none';
     },
     ready: function(fn) {
         if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading"){

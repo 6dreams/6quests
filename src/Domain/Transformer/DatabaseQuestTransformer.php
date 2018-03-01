@@ -8,7 +8,6 @@ use SixQuests\Domain\Model\Quest;
 
 /**
  * Class DatabaseQuestTransformer
- * @package SixQuests\Domain\Transformer
  */
 class DatabaseQuestTransformer extends AbstractDatabaseTransformer
 {
@@ -16,6 +15,7 @@ class DatabaseQuestTransformer extends AbstractDatabaseTransformer
      * Преобразовать ответ базы в объект квеста.
      *
      * @param array $data
+     *
      * @return Quest
      */
     public function transform(array $data): Quest

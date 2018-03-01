@@ -10,7 +10,6 @@ use SixQuests\Domain\Specification\DateTimeSpecification;
 
 /**
  * Class TeamInfo
- * @package SixQuests\Domain\Model\DTO
  */
 class TeamInfo
 {

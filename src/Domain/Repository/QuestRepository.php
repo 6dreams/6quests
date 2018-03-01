@@ -10,19 +10,9 @@ use SixQuests\Domain\Model\Quest;
  *
  * @method Quest getById(int $questId);
  * @method bool upsert(Quest $model);
- *
- * @package SixQuests\Domain\Repository
  */
 class QuestRepository extends AbstractRepository
 {
-    /**
-     * {@inheritdoc}
-     */
-    protected function getDefaultModel(): string
-    {
-        return Quest::class;
-    }
-
     /**
      * Список почти завершённых квестов.
      *
@@ -37,5 +27,13 @@ class QuestRepository extends AbstractRepository
                 'few_days' => new \DateTime('now -3day')
             ]
         );
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function getDefaultModel(): string
+    {
+        return Quest::class;
     }
 }

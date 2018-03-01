@@ -8,7 +8,6 @@ use SixQuests\Domain\Model\Team;
 
 /**
  * Class DatabaseTeamTransformer
- * @package SixQuests\Domain\Transformer
  */
 class DatabaseTeamTransformer extends AbstractDatabaseTransformer
 {
@@ -16,6 +15,7 @@ class DatabaseTeamTransformer extends AbstractDatabaseTransformer
      * Трансформировать массив из базы в объект команды.
      *
      * @param array $data
+     *
      * @return Team
      */
     public function transform(array $data): Team

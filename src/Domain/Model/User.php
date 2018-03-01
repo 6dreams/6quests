@@ -26,8 +26,6 @@ use SixQuests\Domain\Model\Traits\RelationTrait;
  *
  * @method int getRole();
  * @method User setRole(int $role);
- *
- * @package SixQuests\Domain\Model
  */
 class User
 {

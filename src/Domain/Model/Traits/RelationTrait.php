@@ -8,7 +8,6 @@ use SixQuests\Domain\Model\ModelInterface;
 
 /**
  * Class RelationTrait
- * @package SixQuests\Domain\Model\Traits
  */
 trait RelationTrait
 {
@@ -17,10 +16,16 @@ trait RelationTrait
      */
     private $driver;
 
+    /**
+     * @var array[]
+     */
     private $relations = [];
 
     /**
+     * Указать драйвер базы (для отношений).
+     *
      * @param Driver $driver
+     *
      * @return self
      */
     public function setDriver(Driver $driver): self
@@ -34,6 +39,7 @@ trait RelationTrait
      * Получить связь.
      *
      * @param string $name
+     *
      * @return array|mixed
      */
     protected function getRelation(string $name)
@@ -60,11 +66,12 @@ trait RelationTrait
     /**
      * Создать связь.
      *
-     * @param int    $type тип
-     * @param string $fcqn модель
+     * @param int    $type  тип
+     * @param string $fcqn  модель
      * @param string $name
      * @param string $query
      * @param array  $args
+     *
      * @return $this
      */
     protected function createRelation(int $type, string $fcqn, string $name, string $query, array $args = []): self

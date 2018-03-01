@@ -23,8 +23,6 @@ use SixQuests\Domain\Model\Traits\RelationTrait;
  *
  * @method int getQuestId();
  * @method Team setQuestId(int $quest);
- *
- * @package SixQuests\Domain\Model
  */
 class Team
 {

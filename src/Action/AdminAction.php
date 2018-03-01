@@ -56,6 +56,17 @@ class AdminAction
      */
     private $teamPointManager;
 
+    /**
+     * AdminAction constructor.
+     *
+     * @param AuthManager             $authManager
+     * @param AdminQuestListResponder $responder
+     * @param RedirectResponder       $redirector
+     * @param QuestManager            $questManager
+     * @param PointManager            $pointManager
+     * @param TeamManager             $teamManager
+     * @param TeamPointManager        $teamPointManager
+     */
     public function __construct(
         AuthManager $authManager,
         AdminQuestListResponder $responder,
@@ -90,6 +101,14 @@ class AdminAction
         return ($this->responder)($this->questManager->getAdminQuests());
     }
 
+    /**
+     * Базовый просмотр квеста.
+     *
+     * @param Request                 $request
+     * @param AdminQuestViewResponder $responder
+     *
+     * @return Response
+     */
     public function questView(Request $request, AdminQuestViewResponder $responder): Response
     {
         try {
@@ -101,7 +120,14 @@ class AdminAction
         return $responder($this->questManager->getQuest((int) $request->get('id')));
     }
 
-    public function questStart(Request $request)
+    /**
+     * Начать квест!
+     *
+     * @param Request $request
+     *
+     * @return Response
+     */
+    public function questStart(Request $request): Response
     {
         try {
             $this->authManager->checkAdminAuth();

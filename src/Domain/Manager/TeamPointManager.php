@@ -79,6 +79,7 @@ class TeamPointManager
      * Сохранить состояния прибытия команды на точку.
      *
      * @param TeamPoint $teamPoint
+     *
      * @return TeamPoint
      *
      * @throws LogicException
@@ -93,27 +94,6 @@ class TeamPointManager
         $this->teamPoints->upsert($teamPoint);
 
         return $teamPoint;
-    }
-
-    /**
-     * @param TeamPoint $teamPoint
-     * @param Point     $point
-     *
-     * @return bool
-     *
-     * @throws LogicException
-     */
-    private function canModifyTeamOnPoint(TeamPoint $teamPoint, Point $point): bool
-    {
-        if ($teamPoint->getArrived() === null || $teamPoint->getDeparted() !== null) {
-            throw new LogicException();
-        }
-
-        if ((new DateTimeSpecification((clone $teamPoint->getArrived())->modify(sprintf('+%dminutes', $point->getTimeLimit())), new \DateTime()))->more()) {
-            throw new LogicException();
-        }
-
-        return true;
     }
 
     /**
@@ -156,5 +136,26 @@ class TeamPointManager
         $this->teamPoints->upsert($teamPoint->setHintsUsed(((int) $teamPoint->getHintsUsed()) + 1));
 
         return $teamPoint;
+    }
+
+    /**
+     * @param TeamPoint $teamPoint
+     * @param Point     $point
+     *
+     * @return bool
+     *
+     * @throws LogicException
+     */
+    private function canModifyTeamOnPoint(TeamPoint $teamPoint, Point $point): bool
+    {
+        if ($teamPoint->getArrived() === null || $teamPoint->getDeparted() !== null) {
+            throw new LogicException();
+        }
+
+        if ((new DateTimeSpecification((clone $teamPoint->getArrived())->modify(sprintf('+%dminutes', $point->getTimeLimit())), new \DateTime()))->less()) {
+            throw new LogicException();
+        }
+
+        return true;
     }
 }

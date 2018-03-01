@@ -8,7 +8,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class PointListResponder
- * @package SixQuests\Responder\Point
  */
 class PointListResponder extends AbstractResponder
 {
@@ -21,6 +20,7 @@ class PointListResponder extends AbstractResponder
      * Отрендерить страницу со списком точек.
      *
      * @param array $points
+     *
      * @return Response
      */
     public function __invoke(array $points): Response

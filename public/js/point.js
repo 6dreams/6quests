@@ -13,33 +13,38 @@ points = {
         return window.teams[points.getTeamIndex(id)];
     },
 
+    serverCallback: function (team) {
+        window.teams[points.getTeamIndex(team.id)] = team;
+        points.renderTeam(team.id);
+    },
+
     clickArrived: function (t) {
-        $.request('/team/arrive', { team: t, point: window.point.id }, function (team) {
-            points.updateTeam(t, team);
-        });
+        $.request('/team/arrive', { team: t, point: window.point.id }, points.serverCallback);
     },
 
     clickHint: function(t) {
-        $.request('/team/hint', { team: t, point: window.point.id }, function (team) {
-            points.updateTeam(t, team);
-        })
+        $.request('/team/hint', { team: t, point: window.point.id }, points.serverCallback)
     },
 
-    updateTeam: function(i, t) {
-        window.teams[points.getTeamIndex(i)] = t;
-        points.renderTeam(i);
+    clickDepart: function(t) {
+        $.request('/team/depart', { team: t, point: window.point.id }, points.serverCallback);
     },
 
     renderTeam: function (id) {
         var team = points.getTeam(id);
-        console.log(team);
-        $.show($.id('team'+id+'n'), team.arrived === null);
-        $.show($.id('team'+id+'a'), team.arrived !== null);
-        $.show($.id('team'+id+'f'), !team.finished);
-        $.show($.id('team'+id+'h'), !team.finished && team.hints < window.point.hints);
-        $.html($.id('team'+id+'c'), team.hints);
-        $.show($.id('team'+id+'d'), team.departed !== null);
-        $.html($.id('team'+id+'dc'), team.departed);
+        id = team.id;
+        $.show('team' + id, team.arrived !== null && !team.finished);
+        $.show('team' + id + 'arr-ctl', team.arrived === null);
+        for (var i = 1; i <= point.hints; i++) {
+            var el = $.id('team' + id + 'hint' + i);
+            team.hints >= i ? $.addClass(el, 'red') : $.removeClass(el, 'red');
+        }
+    },
+
+    refreshAllTeams: function() {
+        for (var i = 0; i < window.teams.length; i++) {
+            points.renderTeam(window.teams[i].id);
+        }
     },
 
     teamTimer: function (t) {
@@ -53,7 +58,10 @@ points = {
             points.renderTeam(t.id);
             return;
         }
-        $.html($.id('team'+t.id+'t'), $.lpad(d.minutes, 0, 2) + ':' + $.lpad(d.seconds, 0, 2));
+        var pointTime = point.time * 60;
+        var teamTime = pointTime - (d.minutes * 60 + d.seconds);
+        $.id('team' + t.id + 'progress').value = teamTime / pointTime * 100;
+        $.html($.id('team'+t.id+'progress'), $.lpad(d.minutes, 0, 2) + ':' + $.lpad(d.seconds, 0, 2));
     },
 
     tick: function() {

@@ -5,7 +5,6 @@ namespace SixQuests\Domain\Model;
 
 /**
  * Interface ModelInterface
- * @package SixQuests\Domain\Model
  */
 interface ModelInterface
 {

@@ -16,6 +16,7 @@ use SixQuests\Domain\Model\Point;
 use SixQuests\Domain\Model\Quest;
 use SixQuests\Domain\Model\Team;
 use SixQuests\Domain\Model\User;
+use SixQuests\Domain\Utility\Utils;
 
 /**
  * Class EditorManager
@@ -64,7 +65,7 @@ class EditorManager
 
         return new ListItems($model, $this->driver->executeFind(
             $model,
-            \sprintf('SELECT * FROM %s%s LIMIT :offset, 20', $this->driver->getPrefix(), $model::TABLE),
+            \sprintf('SELECT * FROM %s%s LIMIT :offset, 20', $this->driver->getPrefix(), Utils::constant($model, 'TABLE')),
             ['offset' => $request->getOffset()]
         ));
     }
@@ -82,7 +83,7 @@ class EditorManager
 
         $item = $this->driver->executeFind(
             $model,
-            \sprintf('SELECT * FROM %s%s WHERE id = :id', $this->driver->getPrefix(), $model::TABLE),
+            \sprintf('SELECT * FROM %s%s WHERE id = :id', $this->driver->getPrefix(), Utils::constant($model, 'TABLE')),
             [ 'id' => $request->getId() ]
         )[0] ?? null;
 
@@ -107,7 +108,7 @@ class EditorManager
         } else {
             $object = $this->driver->executeFind(
                 $model,
-                \sprintf('SELECT * FROM %s%s WHERE id = :id', $this->driver->getPrefix(), $model::TABLE),
+                \sprintf('SELECT * FROM %s%s WHERE id = :id', $this->driver->getPrefix(), Utils::constant($model, 'TABLE')),
                 [ 'id' => $request->getId() ]
             )[0] ?? new $model();
         }

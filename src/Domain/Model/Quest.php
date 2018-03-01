@@ -20,8 +20,6 @@ use SixQuests\Domain\Model\Traits\RelationTrait;
  *
  * @method int getState();
  * @method Quest setState(int $state);
- *
- * @package SixQuests\Domain\Model
  */
 class Quest
 {
@@ -77,7 +75,7 @@ class Quest
      *
      * @return string
      */
-    public function getDateString()
+    public function getDateString(): string
     {
         return $this->date ? $this->date->format('d.m.Y h:i') : '';
     }

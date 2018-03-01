@@ -5,7 +5,6 @@ namespace SixQuests\Domain\Exception;
 
 /**
  * Class NoAuthException
- * @package SixQuests\Domain\Exeception
  */
 class NoAuthException extends \Exception
 {

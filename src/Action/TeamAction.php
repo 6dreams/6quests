@@ -16,7 +16,6 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Class TeamAction
- * @package SixQuests\Action
  */
 class TeamAction
 {
@@ -65,6 +64,7 @@ class TeamAction
      *
      * @param Request           $request
      * @param TeamInfoResponder $responder
+     *
      * @return Response
      */
     public function teamArrived(Request $request, TeamInfoResponder $responder): Response
@@ -93,6 +93,7 @@ class TeamAction
      *
      * @param Request           $request
      * @param TeamInfoResponder $responder
+     *
      * @return Response
      */
     public function teamDeparted(Request $request, TeamInfoResponder $responder): Response
@@ -121,6 +122,7 @@ class TeamAction
      *
      * @param Request           $request
      * @param TeamInfoResponder $responder
+     *
      * @return Response
      */
     public function teamAskHint(Request $request, TeamInfoResponder $responder): Response

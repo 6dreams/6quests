@@ -10,7 +10,6 @@ use Symfony\Component\Routing\RouterInterface;
 
 /**
  * Class RedirectResponder
- * @package SixQuests\Responder
  */
 class RedirectResponder
 {
@@ -33,6 +32,7 @@ class RedirectResponder
      * Переадресовать пользователя туда, где его место.
      *
      * @param User|null $user
+     *
      * @return Response
      */
     public function __invoke(?User $user = null): Response

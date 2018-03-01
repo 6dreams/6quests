@@ -8,7 +8,6 @@ use Symfony\Component\Routing\RouterInterface;
 
 /**
  * Class RouteRedirectResponder
- * @package SixQuests\Responder
  */
 class RouteRedirectResponder
 {
@@ -32,6 +31,7 @@ class RouteRedirectResponder
      *
      * @param string $route
      * @param array  $params
+     *
      * @return RedirectResponse
      */
     public function __invoke(string $route, array $params = []): RedirectResponse

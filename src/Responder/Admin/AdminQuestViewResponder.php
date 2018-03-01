@@ -9,12 +9,18 @@ use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class AdminQuestViewResponder
- * @package SixQuests\Responder\Admin
  */
 class AdminQuestViewResponder extends AbstractResponder
 {
     protected static $content = 'admin/quest_view.html.twig';
 
+    /**
+     * Отобразить страницу.
+     *
+     * @param Quest $quest
+     *
+     * @return Response
+     */
     public function __invoke(Quest $quest): Response
     {
         return $this

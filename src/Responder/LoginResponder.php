@@ -7,7 +7,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class LoginResponder
- * @package SixQuests\Responder
  */
 class LoginResponder extends AbstractResponder
 {
@@ -18,6 +17,7 @@ class LoginResponder extends AbstractResponder
 
     /**
      * @param bool $withError
+     *
      * @return Response
      */
     public function __invoke(bool $withError = false): Response

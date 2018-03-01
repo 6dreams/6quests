@@ -17,7 +17,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class PointAction
- * @package SixQuests\Action
  */
 class PointAction
 {
@@ -74,6 +73,7 @@ class PointAction
      *
      * @param RouteRedirectResponder $redirect
      * @param PointListResponder     $responder
+     *
      * @return Response
      */
     public function pointList(RouteRedirectResponder $redirect, PointListResponder $responder): Response
@@ -97,6 +97,7 @@ class PointAction
      *
      * @param Request            $request
      * @param PointViewResponder $responder
+     *
      * @return Response
      */
     public function pointView(Request $request, PointViewResponder $responder): Response

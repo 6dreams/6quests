@@ -10,8 +10,6 @@ use SixQuests\Domain\Model\User;
  *
  * @method User getById(int $id);
  * @method bool upsert(User $model);
- *
- * @package SixQuests\Domain\Repository
  */
 class UserRepository extends AbstractRepository
 {
@@ -20,6 +18,7 @@ class UserRepository extends AbstractRepository
      *
      * @param string $login
      * @param string $password
+     *
      * @return null|User
      */
     public function getUserByLoginPassword(string $login, string $password): ?User

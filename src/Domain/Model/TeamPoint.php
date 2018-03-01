@@ -26,8 +26,6 @@ use SixQuests\Domain\Model\Traits\RelationTrait;
  *
  * @method int getPointId();
  * @method TeamPoint setPointId(int $id);
- *
- * @package SixQuests\Domain\Model
  */
 class TeamPoint
 {
@@ -73,8 +71,8 @@ class TeamPoint
     public function __construct()
     {
         $this
-            ->createRelation(ModelInterface::RELATION_ONE2ONE, Team::class, 'teamId', 'SELECT * FROM &' . Team::TABLE . " WHERE id = :arg1")
-            ->createRelation(ModelInterface::RELATION_ONE2ONE, Point::class, 'pointId', 'SELECT * FROM &' . Point::TABLE . " WHERE id = :arg1");
+            ->createRelation(ModelInterface::RELATION_ONE2ONE, Team::class, 'teamId', 'SELECT * FROM &' . Team::TABLE . ' WHERE id = :arg1')
+            ->createRelation(ModelInterface::RELATION_ONE2ONE, Point::class, 'pointId', 'SELECT * FROM &' . Point::TABLE . ' WHERE id = :arg1');
     }
 
     /**

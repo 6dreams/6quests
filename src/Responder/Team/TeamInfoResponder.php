@@ -9,7 +9,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class TeamInfoResponder
- * @package SixQuests\Responder\Team
  */
 class TeamInfoResponder extends AbstractJsonResponder
 {
@@ -17,6 +16,7 @@ class TeamInfoResponder extends AbstractJsonResponder
      * Создать ответ от сервера содержащий команду на точке.
      *
      * @param TeamInfo $teamInfo
+     *
      * @return Response
      */
     public function __invoke(TeamInfo $teamInfo): Response

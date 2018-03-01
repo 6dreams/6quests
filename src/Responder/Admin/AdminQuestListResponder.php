@@ -8,14 +8,16 @@ use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class AdminQuestListResponder
- * @package SixQuests\Responder
  */
 class AdminQuestListResponder extends AbstractResponder
 {
     protected static $content = 'admin/quest_list.html.twig';
 
     /**
+     * Отобразить страницу.
+     *
      * @param array $quests
+     *
      * @return Response
      */
     public function __invoke(array $quests): Response

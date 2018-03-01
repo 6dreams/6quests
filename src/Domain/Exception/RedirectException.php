@@ -7,7 +7,6 @@ use SixQuests\Domain\Model\User;
 
 /**
  * Class RedirectException
- * @package SixQuests\Domain\Exception
  */
 class RedirectException extends \Exception
 {

@@ -13,8 +13,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * @method string getDatabase();
  * @method string getUser();
  * @method string getPassword();
- *
- * @package SixQuests\Database
  */
 class Config
 {
@@ -44,6 +42,7 @@ class Config
      * Собраться из контейнера.
      *
      * @param ContainerInterface $container
+     *
      * @return Config
      */
     public static function fromParameters(ContainerInterface $container): self
@@ -54,10 +53,10 @@ class Config
             return $self;
         }
 
-        $self->host     = $container->getParameter('host');
-        $self->database = $container->getParameter('database');
-        $self->user     = $container->getParameter('user');
-        $self->password = $container->getParameter('password');
+        $self->host     = (string) $container->getParameter('host');
+        $self->database = (string) $container->getParameter('database');
+        $self->user     = (string) $container->getParameter('user');
+        $self->password = (string) $container->getParameter('password');
 
         return $self;
     }

@@ -8,8 +8,6 @@ use Symfony\Component\Routing\RouterInterface;
 
 /**
  * Прокси класс между менеджером и респондером. В основном содержит мелочи для отрисовки страницы.
- *
- * @package SixQuests\Domain\Editor
  */
 class EditorConfig
 {
@@ -43,6 +41,7 @@ class EditorConfig
      *
      * @param string $model
      * @param string $name
+     *
      * @return EditorConfig
      */
     public function addMenuItem(string $model, string $name): self
@@ -59,6 +58,7 @@ class EditorConfig
      * Добавить модель.
      *
      * @param EditorModel $model
+     *
      * @return EditorConfig
      */
     public function addModel(EditorModel $model): self
@@ -72,6 +72,7 @@ class EditorConfig
      * Получить модель по её FCQN.
      *
      * @param string $model
+     *
      * @return EditorModel
      */
     public function getModel(string $model): EditorModel
@@ -83,6 +84,7 @@ class EditorConfig
      * Получить короткое название.
      *
      * @param string $fcqn
+     *
      * @return string
      */
     public function getShortNameByFCQN(string $fcqn): string

@@ -11,7 +11,6 @@ use Symfony\Component\Routing\RouteCollectionBuilder;
 
 /**
  * Class Kernel
- * @package SixQuests
  */
 class Kernel extends BaseKernel
 {
