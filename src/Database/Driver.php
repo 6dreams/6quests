@@ -45,6 +45,22 @@ class Driver
     }
 
     /**
+     * Указать конфигурацию.
+     *
+     * @param Config $config
+     * @param string $prefix
+     *
+     * @return Driver
+     */
+    public function setConfig(Config $config, string $prefix): self
+    {
+        $this->config = $config;
+        $this->prefix = $prefix === '' ? '' : $prefix . '_';
+
+        return $this;
+    }
+
+    /**
      * @param string $query
      */
     public function executeRawQuery(string $query): void
@@ -81,8 +97,6 @@ class Driver
     /**
      * Создать или обновить модель в базе.
      *
-     * @todo: вернуть rows/insert_id?
-     *
      * @param mixed $model
      *
      * @throws NotSupportedModelException
@@ -91,7 +105,7 @@ class Driver
     {
         $this->connect();
         $query = $this->hydrator->dehydrate($model);
-        $this->executeQuery($query->getQuery(), $query->getArguments());
+        $this->executeQuery(\str_replace('&&', $this->prefix, $query->getQuery()), $query->getArguments());
     }
 
     /**

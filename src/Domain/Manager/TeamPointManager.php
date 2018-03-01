@@ -139,6 +139,16 @@ class TeamPointManager
     }
 
     /**
+     * Получить репозиторий.
+     *
+     * @return TeamPointRepository
+     */
+    public function getRepository(): TeamPointRepository
+    {
+        return $this->teamPoints;
+    }
+
+    /**
      * @param TeamPoint $teamPoint
      * @param Point     $point
      *

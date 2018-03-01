@@ -25,6 +25,7 @@ class DatabaseTeamTransformer extends AbstractDatabaseTransformer
             ->setName($data['name'] ?? '')
             ->setColor($data['color'] ?? '')
             ->setNumber($data['number'] ?? 0)
+            ->setFinished($data['finished'] === 1)
             ->setQuestId($data['quest_id'] ?? 0);
     }
 

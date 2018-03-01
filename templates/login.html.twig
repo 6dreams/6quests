@@ -4,10 +4,12 @@
 
 {% block body %}
     {%  if error is defined %}
-        wrong login or pass
+        <span class="red">Неправильный логин или пароль.</span>
     {% endif %}
     <form action="{{ path('login') }}" method="post">
+        <div>Логин:</div>
         <input type="text" name="login" />
+        <div>Пароль:</div>
         <input type="password" name="password" />
         <input type="submit" value="Вход" />
     </form>

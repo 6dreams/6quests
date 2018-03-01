@@ -48,6 +48,16 @@ class TeamManager
     }
 
     /**
+     * Завершить квест для команды.
+     *
+     * @param Team $team
+     */
+    public function finish(Team $team): void
+    {
+        $this->getRepository()->upsert($team->setFinished(true));
+    }
+
+    /**
      * Создать DTO содержащую информацию по команде.
      *
      * @param Team      $team

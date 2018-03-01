@@ -20,7 +20,7 @@ class TeamPointRepository extends AbstractRepository
      *
      * @param Point $point
      *
-     * @return array
+     * @return TeamPoint[]
      */
     public function getTeamPointsByPoint(Point $point): array
     {
@@ -32,12 +32,28 @@ class TeamPointRepository extends AbstractRepository
     }
 
     /**
+     * Получить информацию по командам на точке по команде.
+     *
+     * @param Team $team
+     *
+     * @return TeamPoint[]
+     */
+    public function getTeamPointsByTeam(Team $team): array
+    {
+        return $this
+            ->getResults(
+                'SElECT ~fields FROM ~table WHERE `team_id`=:team_id',
+                [ 'team_id' => $team->getId() ]
+            );
+    }
+
+    /**
      * Найти точку команды по точке и команде.
      *
      * @param Team  $team
      * @param Point $point
      *
-     * @return array|mixed
+     * @return TeamPoint|null
      */
     public function getTeamPointByTeamAndPoint(Team $team, Point $point): ?TeamPoint
     {

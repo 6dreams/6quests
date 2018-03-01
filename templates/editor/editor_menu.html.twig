@@ -1,7 +1,6 @@
-<ul class="topmenu">
+<div class="topmenu">
 {% for item in menus %}
-    <li>
-        <a href="{{ item.link }}">{{ item.text }}</a>
-    </li>
+    <a href="{{ item.link }}">{{ item.text }}</a>
 {% endfor %}
-</ul>
+    <a href="{{ path('root_index') }}">Назад</a>
+</div>

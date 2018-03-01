@@ -69,3 +69,33 @@ progress::-moz-progress-bar {
 .red {
     background-color: orangered;
 }
+
+.topmenu {
+    margin-bottom: 20px;
+}
+
+a, a:visited {
+    color: dodgerblue;
+}
+
+.editor-list {
+    border-spacing: 0;
+    width: 80%;
+    border-bottom: dodgerblue 1px solid;
+    border-left: dodgerblue 1px solid;
+    border-right: dodgerblue 1px solid;
+}
+
+.editor-list td, .editor-list th {
+    border-top: dodgerblue 1px solid;
+    text-align: center;
+}
+
+.editor-list tr:hover{
+    background-color: aliceblue;
+}
+
+input, select {
+    width: 50%;
+    margin-bottom: 16px;
+}

@@ -71,6 +71,16 @@ class Quest
     }
 
     /**
+     * Квест завершён?
+     *
+     * @return bool
+     */
+    public function isFinished(): bool
+    {
+        return $this->state === self::STATE_FINISHED;
+    }
+
+    /**
      * Получить дату строкой.
      *
      * @return string
@@ -78,5 +88,23 @@ class Quest
     public function getDateString(): string
     {
         return $this->date ? $this->date->format('d.m.Y h:i') : '';
+    }
+
+    /**
+     * Указать дату.
+     *
+     * @param string $value
+     *
+     * @return $this
+     */
+    public function setDateString(string $value): self
+    {
+        try {
+            $this->date = new \DateTime($value);
+        } catch (\Exception $e) {
+            $this->date = $this->data ?? new \DateTime();
+        }
+
+        return $this;
     }
 }

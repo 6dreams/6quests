@@ -23,6 +23,9 @@ use SixQuests\Domain\Model\Traits\RelationTrait;
  *
  * @method int getQuestId();
  * @method Team setQuestId(int $quest);
+ *
+ * @method bool isFinished();
+ * @method self setFinished(bool $state);
  */
 class Team
 {
@@ -30,7 +33,7 @@ class Team
 
     public const TABLE = 'teams';
 
-    public const FIELDS = ['id', 'name', 'number', 'color', 'quest'];
+    public const FIELDS = ['id', 'name', 'number', 'color', 'finished', 'quest_id'];
 
     /**
      * @var int
@@ -51,6 +54,11 @@ class Team
      * @var string
      */
     protected $color;
+
+    /**
+     * @var bool
+     */
+    protected $finished;
 
     /**
      * @var int

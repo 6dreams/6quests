@@ -69,6 +69,10 @@ class TeamInfo
      */
     public function getIsFinished(): bool
     {
+        if ($this->team->isFinished()) {
+            return true;
+        }
+
         if ($this->data->getDeparted() !== null) {
             return true;
         }

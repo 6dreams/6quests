@@ -19,12 +19,12 @@ class TeamRepository extends AbstractRepository
      *
      * @param Quest $quest
      *
-     * @return array
+     * @return Team[]
      */
     public function getTeamsByQuest(Quest $quest): array
     {
         return $this->getResults(
-            'SELECT ~fields FROM ~table LEFT JOIN `&quests` ON ~table.`quest_id` = `&quests`.`id` WHERE `&quests`.`id` = :quest_id',
+            'SELECT ~fields FROM ~table WHERE `quest_id` = :quest_id',
             [
                 'quest_id' => $quest->getId()
             ]

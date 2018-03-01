@@ -48,7 +48,7 @@ abstract class AbstractDatabaseTransformer implements DatabaseTransformerInterfa
             $this->fields = [];
             $args['where_id'] = $id;
 
-            return new Query(\sprintf('UPDATE `%s` SET %s WHERE `id`=:where_id', $table, \implode(', ', $query ?? [])), $args);
+            return new Query(\sprintf('UPDATE `&&%s` SET %s WHERE `id`=:where_id', $table, \implode(', ', $query ?? [])), $args);
         }
 
         $values = [];
@@ -59,7 +59,7 @@ abstract class AbstractDatabaseTransformer implements DatabaseTransformerInterfa
         }
 
         return new Query(\sprintf(
-            'INSERT INTO `%s` (%s) VALUES (%s)',
+            'INSERT INTO `&&%s` (%s) VALUES (%s)',
             $table,
             \implode(', ', $names),
             \implode(', ', $values)

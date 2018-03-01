@@ -39,6 +39,25 @@ class Config
     protected $password = '';
 
     /**
+     * Собраться из массива.
+     *
+     * @param array $data
+     *
+     * @return Config
+     */
+    public static function fromArray(array $data): self
+    {
+        $self = new self();
+
+        $self->user = $data['user'] ?? '';
+        $self->host = $data['host'] ?? '';
+        $self->database = $data['database'] ?? '';
+        $self->password = $data['password'] ?? '';
+
+        return $self;
+    }
+
+    /**
      * Собраться из контейнера.
      *
      * @param ContainerInterface $container
@@ -59,5 +78,24 @@ class Config
         $self->password = (string) $container->getParameter('password');
 
         return $self;
+    }
+
+    /**
+     * Превратиться в YML конфиг.
+     *
+     * @param null|string $prefix
+     *
+     * @return string
+     */
+    public function toYml(?string $prefix): string
+    {
+        return \sprintf(
+            "parameters:\n   host: %s\n   user: %s\n   password: %s\n   database: %s\n%s\n",
+            $this->host,
+            $this->user,
+            $this->password,
+            $this->database,
+            $prefix === null || $prefix === '' ? '' : '   prefix: ' . $prefix
+        );
     }
 }

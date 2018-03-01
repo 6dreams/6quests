@@ -30,6 +30,16 @@ quest_start:
     path: /quest/{id}/start
     controller: SixQuests\Action\AdminAction:questStart
 
+# Просмотр квеста админом.
+quest_handler:
+    path: /admin/{id}/view
+    controller: SixQuests\Action\AdminAction:questHandle
+
+# Команда завершила квест.
+quest_finish:
+    path: /admin/{id}/finish
+    controller: SixQuests\Action\AdminAction:questFinish
+
 # Просмотр и управление точкой для координатора.
 point_view:
     path: /point/{id}

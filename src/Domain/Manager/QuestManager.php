@@ -64,4 +64,14 @@ class QuestManager
     {
         $this->quests->upsert($quest->setState(Quest::STATE_ACTIVE));
     }
+
+    /**
+     * Завершить квест.
+     *
+     * @param Quest $quest
+     */
+    public function finishQuest(Quest $quest): void
+    {
+        $this->quests->upsert($quest->setState(Quest::STATE_FINISHED));
+    }
 }
