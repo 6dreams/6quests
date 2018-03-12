@@ -3,14 +3,14 @@
 {% block title %}{{ parent() }} — Вход{% endblock %}
 
 {% block body %}
-    {%  if error is defined %}
+    {%  if error %}
         <span class="red">Неправильный логин или пароль.</span>
     {% endif %}
     <form action="{{ path('login') }}" method="post">
-        <div>Логин:</div>
-        <input type="text" name="login" />
-        <div>Пароль:</div>
-        <input type="password" name="password" />
+        <div><label for="login">Логин:</label></div>
+        <input id="login" type="text" name="login" />
+        <div><label for="pass">Пароль:</label></div>
+        <input id="pass" type="password" name="password" />
         <input type="submit" value="Вход" />
     </form>
 {% endblock %}

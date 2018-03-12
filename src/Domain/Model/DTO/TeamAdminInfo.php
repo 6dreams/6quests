@@ -53,22 +53,24 @@ class TeamAdminInfo
                 continue;
             }
 
-            // пропуск точки
-            if ($tp->getArrived() === null) {
+            // пропуск точки, если команда уже на финише.
+            if ($tp->getArrived() === null && $team->isFinished()) {
                 $this->penalty += $point->getSkipCost() * 60;
                 continue;
             }
 
 
             if ($tp->getDeparted() === null) {
-                // загадка не отгадана
-                $this->penalty += $point->getTimeLimit() * 60;
+                // загадка не отгадана, а команда уже на финише
+                if ($team->isFinished()) {
+                    $this->passing += $point->getTimeLimit() * 60;
+                }
             } else {
                 // загадку отгадали
                 $this->passing += $tp->getDeparted()->getTimestamp() - $tp->getArrived()->getTimestamp();
             }
 
-            // использование подсказок
+            // использование подсказок (отображаем всегда).
             $this->penalty += $tp->getHintsUsed() * $point->getHintCost() * 60;
         }
 
@@ -76,7 +78,7 @@ class TeamAdminInfo
     }
 
     /**
-     * Форматировать секунды в H:m:s формат.
+     * Форматировать секунды в hour:minite формат.
      *
      * @param int $value
      *

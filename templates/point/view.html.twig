@@ -4,7 +4,7 @@
 
 {% block body %}
     <div class="headbox">
-    <h2>Точка &laquo;{{ point.name }}&raquo;</h2>
+        <h2>Точка &laquo;{{ point.name }}&raquo; &mdash; <a href="{{ path('logout') }}">выход</a></h2>
         {% if point.hints > 0 %}Подсказок: {{ point.hints }} (стоимость: {{ point.hintCost }} мин.), в{% else %}В{% endif %}ремя: {{ point.timeLimit }} мин., пропуск точки: {{ point.skipCost }} мин.
     </div>
 

@@ -4,6 +4,11 @@ login:
     methods: [ 'POST' ]
     controller: SixQuests\Action\LoginAction:login
 
+# Выйти из аккаунта.
+logout:
+    path: /logout
+    controller: SixQuests\Action\LoginAction:logout
+
 # Форма входа в аккаунт
 login_form:
     path: /login
@@ -39,6 +44,11 @@ quest_handler:
 quest_finish:
     path: /admin/{id}/finish
     controller: SixQuests\Action\AdminAction:questFinish
+
+# Завершить квест для всех.
+quest_finish_force:
+    path: /quest/{id}/finish
+    controller: SixQuests\Action\AdminAction:questForceFinish
 
 # Просмотр и управление точкой для координатора.
 point_view:

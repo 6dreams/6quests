@@ -3,7 +3,7 @@
 {% block title %}{{ parent() }} - {{ quest.name }}{% endblock %}
 
 {% block body %}
-    <h2>{{ quest.name }}</h2>
+    <h2>{{ quest.name }} [<a href="{{ path('root_index') }}">назад</a>] &mdash; <a href="{{ path('logout') }}">выход</a></h2>
     {% if quest.state == constant('SixQuests\\Domain\\Model\\Quest::STATE_UNKNOWN') %}
         <a href="{{ path('quest_start', { 'id' : quest.id }) }}">Начать квест</a>
     {% endif %}

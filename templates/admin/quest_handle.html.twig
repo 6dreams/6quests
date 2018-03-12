@@ -19,10 +19,14 @@
             <td data-value="{{ info.passing }}">{{ info.formatted(info.passing) }}</td>
             <td data-value="{{ info.penalty }}">{{ info.formatted(info.penalty) }}</td>
             <td data-value="{{ info.total }}">{{ info.formatted(info.total) }}</td>
-            <td><a class="button" href="{{ path('quest_finish', { 'id': info.team.id }) }}">Завершили</a></td>
+            <td>{% if not info.team.finished %}<a class="button" href="{{ path('quest_finish', { 'id': info.team.id }) }}">Завершили</a>{% endif %}</td>
         </tr>
         {% endfor %}
     </table>
+
+    {% if not quest.finished %}
+        <a href="{{ path('quest_finish_force') }}" class="red button" style="margin-top: 32pt">Завершить квест</a>
+    {% endif %}
 {% endblock %}
 
 {% block javascripts %}

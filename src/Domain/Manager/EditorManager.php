@@ -210,7 +210,7 @@ class EditorManager
                 break;
             case User::class:
                 $model
-                    ->addField(new EditorField('name', EditorField::TYPE_INPUT, 'Имя'))
+                    ->addField(new EditorField('name', EditorField::TYPE_INPUT, 'Логин'))
                     ->addField(new EditorField('password', EditorField::TYPE_INPUT, 'Пароль'))
                     ->addField(new EditorField('firstName', EditorField::TYPE_INPUT, 'Имя'))
                     ->addField(new EditorField('lastName', EditorField::TYPE_INPUT, 'Фамилия'))

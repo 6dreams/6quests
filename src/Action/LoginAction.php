@@ -78,4 +78,16 @@ class LoginAction
 
         return ($this->redirector)($user);
     }
+
+    /**
+     * Выйти.
+     *
+     * @return Response
+     */
+    public function logout(): Response
+    {
+        $this->authManager->logout();
+
+        return ($this->responder)(false);
+    }
 }

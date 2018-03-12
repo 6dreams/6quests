@@ -198,6 +198,37 @@ class AdminAction
     }
 
     /**
+     * Завершить квест для всех команд.
+     *
+     * @param Request $request
+     * @param RouteRedirectResponder $redirect
+     *
+     * @return Response
+     */
+    public function questForceFinish(Request $request, RouteRedirectResponder $redirect): Response
+    {
+        try {
+            $this->authManager->checkAdminAuth();
+        } catch (RedirectException $e) {
+            return ($this->redirector)($e->getUser());
+        }
+
+        $quest = $this->questManager->getQuest((int) $request->get('id'));
+        if (!$quest) {
+            return ($this->redirector)($this->authManager->getUser());
+        }
+
+        $this->questManager->finishQuest($quest);
+
+        $teams = $this->teamManager->getRepository()->getTeamsByQuest($quest);
+        foreach ($teams as $team) {
+            $this->teamManager->finish($team);
+        }
+
+        return $redirect('quest_handler', [ 'id' => $quest->getId() ]);
+    }
+
+    /**
      * Обработка квеста в админке.
      *
      * @param Request                   $request

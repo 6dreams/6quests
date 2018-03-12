@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block body %}
-    <h2>Квесты [<a href="{{ path('editor_main') }}">Управление</a>]</h2>
+    <h2>Квесты [<a href="{{ path('editor_main') }}">Управление</a>] &mdash; <a href="{{ path('logout') }}">выход</a></h2>
     {% for quest in quests %}
         <li>
             <a href="{{ path('quest_view', {'id' : quest.id}) }}">{{ quest.name }}</a>: {{ quest.stateName }} - {{ quest.date | date('d.m.Y') }}

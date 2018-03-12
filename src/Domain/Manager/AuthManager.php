@@ -109,4 +109,12 @@ class AuthManager
             throw new RedirectException($user);
         }
     }
+
+    /**
+     * Выйти из аккаунта.
+     */
+    public function logout(): void
+    {
+        $this->session->clear();
+    }
 }
