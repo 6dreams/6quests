@@ -23,6 +23,8 @@ use SixQuests\Domain\Utility\Utils;
  */
 class EditorManager
 {
+    private const LIMIT = 20;
+
     public const MAPPINGS = [
         'quest' => [Quest::class, 'Квесты'],
         'user'  => [User::class, 'Пользователи'],
@@ -63,11 +65,14 @@ class EditorManager
     {
         $model = $this->getModel($request->getModel() ?? '');
 
-        return new ListItems($model, $this->driver->executeFind(
+        return (new ListItems($model, $this->driver->executeFind(
             $model,
-            \sprintf('SELECT * FROM %s%s LIMIT :offset, 20', $this->driver->getPrefix(), Utils::constant($model, 'TABLE')),
-            ['offset' => $request->getOffset()]
-        ));
+            \sprintf('SELECT * FROM %s%s LIMIT :offset, :limit', $this->driver->getPrefix(), Utils::constant($model, 'TABLE')),
+            ['offset' => $request->getOffset(), 'limit' => self::LIMIT]
+        )))
+            ->setCount($this->driver->executeCount(Utils::constant($model, 'TABLE')))
+            ->setCurrent($request->getOffset())
+            ->setLimit(self::LIMIT);
     }
 
     /**

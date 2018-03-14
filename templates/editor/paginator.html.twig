@@ -1,0 +1,3 @@
+{% for page in iter %}
+    <a href="{{ path('editor_list', { model: model }) }}?offset={{ page.offset }}">{{ page.number }}</a>
+{% endfor %}

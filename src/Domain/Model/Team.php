@@ -24,8 +24,8 @@ use SixQuests\Domain\Model\Traits\RelationTrait;
  * @method int getQuestId();
  * @method Team setQuestId(int $quest);
  *
- * @method bool isFinished();
- * @method self setFinished(bool $state);
+ * @method \DateTime getFinished();
+ * @method self setFinished(\DateTime $time);
  */
 class Team
 {
@@ -56,7 +56,7 @@ class Team
     protected $color;
 
     /**
-     * @var bool
+     * @var \DateTime
      */
     protected $finished;
 
@@ -86,5 +86,13 @@ class Team
     public function getQuest(): ?Quest
     {
         return $this->getRelation('questId');
+    }
+
+    /**
+     * @return bool
+     */
+    public function isFinished(): bool
+    {
+        return $this->finished !== null;
     }
 }

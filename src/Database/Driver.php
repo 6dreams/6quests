@@ -95,6 +95,23 @@ class Driver
     }
 
     /**
+     * Получить кол-во элементов в таблице.
+     *
+     * @param string $table
+     * @param array  $args
+     *
+     * @return int
+     */
+    public function executeCount(string $table, array $args = []): int
+    {
+        $this->connect();
+
+        $ret = $this->executeQuery('SELECT COUNT(*) as `amount` FROM `' . $this->prefix . $table . '`;', $args)->fetchAll(\PDO::FETCH_ASSOC);
+
+        return (int) $ret[0]['amount'];
+    }
+
+    /**
      * Создать или обновить модель в базе.
      *
      * @param mixed $model
@@ -170,7 +187,7 @@ class Driver
     {
         $statement = $this->pdo->prepare($query);
         if (!$statement) {
-            echo print_r($this->pdo->errorInfo(), true);
+            echo \print_r($this->pdo->errorInfo(), true);
         }
 
         foreach ($args as $key => $value) {

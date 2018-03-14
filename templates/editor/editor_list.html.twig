@@ -16,4 +16,6 @@
             </tr>
         {% endfor %}
     </table>
+
+    {% if paginator.visible %}{% include "editor/paginator.html.twig" with { iter: paginator.iterator, model: model } %}{% endif %}
 {% endblock %}

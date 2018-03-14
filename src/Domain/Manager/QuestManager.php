@@ -62,7 +62,11 @@ class QuestManager
      */
     public function startQuest(Quest $quest): void
     {
-        $this->quests->upsert($quest->setState(Quest::STATE_ACTIVE));
+        $this->quests->upsert(
+            $quest
+                ->setState(Quest::STATE_ACTIVE)
+                ->setDate(new \DateTime())
+        );
     }
 
     /**

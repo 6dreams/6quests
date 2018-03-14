@@ -21,7 +21,7 @@ CREATE TABLE `&teams` (
   `number` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
   `color` varchar(255) NOT NULL,
-  `finished` int(1) NOT NULL DEFAULT '0',
+  `finished` datetime DEFAULT NULL,
   `quest_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 ----

@@ -32,6 +32,7 @@ class EditorListResponder extends AbstractEditorResponder
             ->setVariable('heading', $fields)
             ->setVariable('items', $list->getItems())
             ->setVariable('model', $config->getShortNameByFCQN($list->getName()))
+            ->setVariable('paginator', $list->getPaginator())
             ->render();
     }
 }

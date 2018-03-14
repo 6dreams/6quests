@@ -18,6 +18,7 @@ use SixQuests\Domain\Model\TeamPoint;
 class TeamAdminInfo
 {
     use RichModelTrait;
+
     /**
      * @var Team
      */
@@ -47,6 +48,10 @@ class TeamAdminInfo
     public function __construct(Team $team, array $points)
     {
         $this->team = $team;
+        $quest = $team->getQuest();
+        if (!$quest) {
+            return;
+        }
         foreach ($points as $tp) {
             $point = $tp->getPoint();
             if (!$point) {
@@ -59,21 +64,13 @@ class TeamAdminInfo
                 continue;
             }
 
-
-            if ($tp->getDeparted() === null) {
-                // загадка не отгадана, а команда уже на финише
-                if ($team->isFinished()) {
-                    $this->passing += $point->getTimeLimit() * 60;
-                }
-            } else {
-                // загадку отгадали
-                $this->passing += $tp->getDeparted()->getTimestamp() - $tp->getArrived()->getTimestamp();
-            }
-
             // использование подсказок (отображаем всегда).
             $this->penalty += $tp->getHintsUsed() * $point->getHintCost() * 60;
         }
 
+        // (времяКогдаПрибылиНаФиниш | текущееВремя) - времяНачалаКвеста
+        $this->passing = ($team->getFinished() ?? new \DateTime())->getTimestamp() - $quest->getDate()->getTimestamp();
+        // времяПрохождения + штрафы
         $this->total = $this->penalty + $this->passing;
     }
 
@@ -86,6 +83,9 @@ class TeamAdminInfo
      */
     public function getFormatted(int $value): string
     {
-        return \gmdate('H:i', $value);
+        $hours = \floor($value / 3600);
+        $minutes = \floor(($value / 60) % 60);
+
+        return \sprintf('%01d:%01d', $hours, $minutes);
     }
 }

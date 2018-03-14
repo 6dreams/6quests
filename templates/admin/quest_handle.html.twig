@@ -4,7 +4,7 @@
 
 {% block body %}
     <h2>{{ quest.name }} [<a href="{{ path('root_index') }}">Назад</a>]</h2>
-    {% if quest.finished %}Квест завершён{% endif %}
+    {% if quest.finished %}Квест завершён{% else %}Время начала квеста: {{ quest.date | date('d.m.Y H:i:s') }}{% endif %}
     {% set titles = ['Команда', 'Прохождение', 'Штрафы', 'Итог'] %}
     <table class="editor-list" id="l">
         <tr>

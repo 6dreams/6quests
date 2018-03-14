@@ -49,6 +49,10 @@ class TeamPointManager
      */
     public function create(Team $team, Point $point): void
     {
+        if ($this->teamPoints->getTeamPointByTeamAndPoint($team, $point) !== null) {
+            return;
+        }
+
         $this->teamPoints->upsert(
             (new TeamPoint())
                 ->setHintsUsed(0)

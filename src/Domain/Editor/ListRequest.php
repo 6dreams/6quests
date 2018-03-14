@@ -34,6 +34,6 @@ class ListRequest
     public function __construct(Request $request)
     {
         $this->model = $request->get('model');
-        $this->offset = $request->get('offset', 0);
+        $this->offset = (int) $request->get('offset', 0);
     }
 }

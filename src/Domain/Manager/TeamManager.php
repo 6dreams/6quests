@@ -54,7 +54,9 @@ class TeamManager
      */
     public function finish(Team $team): void
     {
-        $this->getRepository()->upsert($team->setFinished(true));
+        if (!$team->isFinished()) {
+            $this->getRepository()->upsert($team->setFinished(new \DateTime()));
+        }
     }
 
     /**
