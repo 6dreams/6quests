@@ -25,7 +25,7 @@
     </table>
 
     {% if not quest.finished %}
-        <a href="{{ path('quest_finish_force') }}" class="red button" style="margin-top: 32pt">Завершить квест</a>
+        <a href="{{ path('quest_finish_force', { id: quest.id }) }}" class="red button" style="margin-top: 32pt">Завершить квест</a>
     {% endif %}
 {% endblock %}
 
