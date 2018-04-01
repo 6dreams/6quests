@@ -19,9 +19,11 @@
             </tr>
             <tr>
                 <td colspan="3">
+                {% if point.hints > 0 %}
                 {% for i in 1..point.hints %}
                     <span id="team{{ info.team.id }}hint{{ i }}" class="button" onclick="points.clickHint({{ info.team.id }});">Подсказка №{{ i }}</span>
                 {% endfor %}
+                {% endif %}
                 </td>
             </tr>
         </table>
@@ -29,7 +31,7 @@
 
     <div class="teamlist">
     {% for info in infos %}
-            <span class="button" id="team{{ info.team.id }}arr-ctl" onclick="points.clickArrived({{ info.team.id }})">{{ info.team.number }}</span>
+        <span class="button" id="team{{ info.team.id }}arr-ctl" onclick="points.clickArrived({{ info.team.id }})">{{ info.team.number }}</span>
     {% endfor %}
     </div>
 {% endblock %}

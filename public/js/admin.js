@@ -1,4 +1,5 @@
 admin = {
+    prev: null,
     /**
      * @source https://www.w3schools.com/howto/howto_js_sort_table.asp
      * @param table
@@ -38,6 +39,18 @@ admin = {
                     switching = true;
                 }
             }
+        }
+    },
+
+    toggle: function(i) {
+        if (admin.prev !== null && i !== admin.prev) {
+            $.addClass($.id('ai' + admin.prev), 'dn');
+        }
+        var e = $.id('ai' + i);
+        if ($.hasClass(e, 'dn')) {
+            $.removeClass(e, 'dn');
+        } else {
+            $.addClass(e, 'dn');
         }
     }
 };

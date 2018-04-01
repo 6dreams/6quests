@@ -14,6 +14,7 @@ use SixQuests\Domain\Model\TeamPoint;
  * @method int getPassing();
  * @method int getTotal();
  * @method int getPenalty();
+ * @method TeamInfo[] getPoints();
  */
 class TeamAdminInfo
 {
@@ -40,6 +41,21 @@ class TeamAdminInfo
     protected $penalty = 0;
 
     /**
+     * @var TeamPointAdminInfo[]
+     */
+    protected $points = [];
+
+    /**
+     * @var int
+     */
+    protected $totalHints = 0;
+
+    /**
+     * @var int
+     */
+    protected $totalHintsUsed = 0;
+
+    /**
      * TeamAdminInfo constructor.
      *
      * @param Team        $team
@@ -58,13 +74,18 @@ class TeamAdminInfo
                 continue;
             }
 
+            $this->points[] = new TeamPointAdminInfo($tp, $point);
+
+            $this->totalHints += $point->getHints();
+            $this->totalHintsUsed += $tp->getHintsUsed();
+
             // пропуск точки, если команда уже на финише.
             if ($tp->getArrived() === null && $team->isFinished()) {
                 $this->penalty += $point->getSkipCost() * 60;
                 continue;
             }
 
-            // использование подсказок (отображаем всегда).
+            // использование подсказок.
             $this->penalty += $tp->getHintsUsed() * $point->getHintCost() * 60;
         }
 
@@ -86,6 +107,6 @@ class TeamAdminInfo
         $hours = \floor($value / 3600);
         $minutes = \floor(($value / 60) % 60);
 
-        return \sprintf('%01d:%01d', $hours, $minutes);
+        return \sprintf('%02d:%02d', $hours, $minutes);
     }
 }

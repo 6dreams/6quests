@@ -38,8 +38,13 @@ body {
     cursor: pointer;
 }
 
+/* team arrived button list. */
 .teamlist {
     margin-top: 80px;
+}
+
+.teamlist span {
+    font-size: 32pt;
 }
 
 span.button {
@@ -86,6 +91,13 @@ a, a:visited {
     border-left: dodgerblue 1px solid;
     border-right: dodgerblue 1px solid;
 }
+
+/* admin large team info */
+.alti {
+    margin-top: 20pt;
+}
+
+.dn { display: none }
 
 .editor-list td, .editor-list th {
     border-top: dodgerblue 1px solid;

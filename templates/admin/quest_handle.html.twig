@@ -15,7 +15,7 @@
         </tr>
         {% for info in list %}
         <tr>
-            <td data-value="{{ info.team.id }}">№{{ info.team.id }} {{ info.team.name }}</td>
+            <td data-value="{{ info.team.id }}"><a href="javascript:" onclick="admin.toggle({{ info.team.id }})">№{{ info.team.number }} {{ info.team.name }}</a></td>
             <td data-value="{{ info.passing }}">{{ info.formatted(info.passing) }}</td>
             <td data-value="{{ info.penalty }}">{{ info.formatted(info.penalty) }}</td>
             <td data-value="{{ info.total }}">{{ info.formatted(info.total) }}</td>
@@ -23,6 +23,34 @@
         </tr>
         {% endfor %}
     </table>
+
+    {% set tt = ['Точка', 'Состояние', 'Посказки', 'Штрафы'] %}
+    {% for info in list %}
+    <div id="ai{{ info.team.id }}" class="dn alti">
+        <h4>{{ info.team.name }} (точные значения только при финише команды)</h4>
+        <table class="editor-list">
+            <tr>
+                {% for title in tt %}
+                    <th>{{ title }}</th>
+                {% endfor %}
+            </tr>
+            {% for ti in info.points %}
+            <tr>
+                <td>{{ ti.point.name }}</td>
+                <td>{% if not ti.skipped %}не {% endif %}пропущена</td>
+                <td>{{ ti.teamPoint.hintsUsed }} / {{ ti.point.hints }}</td>
+                <td data-seconds="{{ ti.penalty }}">{{ info.formatted(ti.penalty) }}</td>
+            </tr>
+            {% endfor %}
+            <tr>
+                <td>В пути</td>
+                <td>~</td>
+                <td>{{ info.totalHintsUsed }} / {{ info.totalHints }}</td>
+                <td data-seconds="{{ info.passing }}">{{ info.formatted(info.passing) }}</td>
+            </tr>
+        </table>
+    </div>
+    {% endfor %}
 
     {% if not quest.finished %}
         <a href="{{ path('quest_finish_force', { id: quest.id }) }}" class="red button" style="margin-top: 32pt">Завершить квест</a>
